@@ -1,0 +1,128 @@
+\doxysection{SIM800x.\+h}
+\label{_s_i_m800x_8h_source}\index{C:/Users/Jonatan/OneDrive/Escritorio/PCSE/Driver\_SIM800x/Inc/SIM800x.h@{C:/Users/Jonatan/OneDrive/Escritorio/PCSE/Driver\_SIM800x/Inc/SIM800x.h}}
+\textbf{ Go to the documentation of this file.}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 }
+\DoxyCodeLine{10 \textcolor{preprocessor}{\#ifndef SIM800X\_INC\_SIM800X\_H\_}}
+\DoxyCodeLine{11 \textcolor{preprocessor}{\#define SIM800X\_INC\_SIM800X\_H\_}}
+\DoxyCodeLine{12 }
+\DoxyCodeLine{13 \textcolor{preprocessor}{\#include <stdbool.h>}}
+\DoxyCodeLine{14 \textcolor{preprocessor}{\#include <stdio.h>}}
+\DoxyCodeLine{15 \textcolor{preprocessor}{\#include <string.h>}}
+\DoxyCodeLine{16 \textcolor{preprocessor}{\#include <stdint.h>}}
+\DoxyCodeLine{17 \textcolor{preprocessor}{\#include "{}port.h"{}}}
+\DoxyCodeLine{18 }
+\DoxyCodeLine{23 \textcolor{keyword}{typedef} \textcolor{keywordtype}{bool} bool\_t;}
+\DoxyCodeLine{24 }
+\DoxyCodeLine{25 \textcolor{comment}{/*-\/-\/-\/-\/ COMMUNICATION AND CONFIG SERIAL PORT SIM -\/-\/-\/-\/*/}}
+\DoxyCodeLine{30 \textcolor{preprocessor}{\#define AT\_CHECK\_COMM               "{}AT"{}}}
+\DoxyCodeLine{31 \textcolor{preprocessor}{\#define AT\_CMD\_CONFIG\_BAUD          "{}IPR"{}}}
+\DoxyCodeLine{32 \textcolor{preprocessor}{\#define DEFAULT\_BAUD\_RATE\_SIM       "{}9600"{}}}
+\DoxyCodeLine{33 \textcolor{comment}{/*-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*/}}
+\DoxyCodeLine{34 }
+\DoxyCodeLine{35 \textcolor{comment}{/*-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/ STATUS RESPONSES -\/-\/-\/-\/-\/-\/-\/-\/*/}}
+\DoxyCodeLine{36 \textcolor{preprocessor}{\#define OK              0}}
+\DoxyCodeLine{37 \textcolor{preprocessor}{\#define ERROR           1}}
+\DoxyCodeLine{38 \textcolor{preprocessor}{\#define NO\_RESPONSE     2}}
+\DoxyCodeLine{39 \textcolor{comment}{/*-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*/}}
+\DoxyCodeLine{40 }
+\DoxyCodeLine{41 \textcolor{comment}{/*-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/ STATUS REGISTRATION NETWORK RESPONSES -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*/}}
+\DoxyCodeLine{42 \textcolor{preprocessor}{\#define AT\_CMD\_NETWORK\_REGISTER                 "{}AT+CREG?"{}}}
+\DoxyCodeLine{43 \textcolor{preprocessor}{\#define NETWORK\_NOT\_REGISTERED\_NO\_SEARCHING     "{},0"{}}}
+\DoxyCodeLine{44 \textcolor{preprocessor}{\#define NETWORK\_REGISTERED                      "{},1"{}}}
+\DoxyCodeLine{45 \textcolor{preprocessor}{\#define NETWORK\_NOT\_REGISTERED\_BUT\_SEARCHING    "{},2"{}}}
+\DoxyCodeLine{46 \textcolor{preprocessor}{\#define REGISTRATION\_DENIED                     "{},3"{}}}
+\DoxyCodeLine{47 \textcolor{preprocessor}{\#define UNKNOWN                                 "{},4"{}}}
+\DoxyCodeLine{48 \textcolor{preprocessor}{\#define REGISTERED\_ROAMING                      "{},5"{}}}
+\DoxyCodeLine{49 \textcolor{comment}{/*-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*/}}
+\DoxyCodeLine{50 }
+\DoxyCodeLine{51 \textcolor{comment}{/*-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/ CALL -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*/}}
+\DoxyCodeLine{52 \textcolor{preprocessor}{\#define AT\_CMD\_CALL             "{}ATD"{}}}
+\DoxyCodeLine{53 \textcolor{preprocessor}{\#define AT\_CMD\_END\_CALL         "{}ATH"{}}}
+\DoxyCodeLine{54 \textcolor{comment}{/*-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*/}}
+\DoxyCodeLine{55 }
+\DoxyCodeLine{56 \textcolor{comment}{/*-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/ SMS -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*/}}
+\DoxyCodeLine{90 \textcolor{preprocessor}{\#define AT\_CMD\_TEXT\_MODE                            "{}CMGF"{}}}
+\DoxyCodeLine{91 \textcolor{preprocessor}{\#define TEXT\_MODE                                   "{}1"{}}}
+\DoxyCodeLine{92 \textcolor{preprocessor}{\#define AT\_CMD\_SEND\_SMS                             "{}CMGS"{}}}
+\DoxyCodeLine{93 \textcolor{preprocessor}{\#define INPUT\_DATA                                  '>'}}
+\DoxyCodeLine{94 \textcolor{preprocessor}{\#define CTRL\_Z                                      0x1A}}
+\DoxyCodeLine{95 \textcolor{preprocessor}{\#define AT\_CMD\_READ\_SMS                             "{}CMGR"{}}}
+\DoxyCodeLine{96 \textcolor{preprocessor}{\#define AT\_CMD\_LIST\_SMS                             "{}CMGL"{}}}
+\DoxyCodeLine{97 \textcolor{preprocessor}{\#define RECEIVED\_UNREAD                             "{}\(\backslash\)"{}REC UNREAD\(\backslash\)"{}"{}}}
+\DoxyCodeLine{98 \textcolor{preprocessor}{\#define RECEIVED\_READ                               "{}\(\backslash\)"{}REC READ\(\backslash\)"{}"{}}}
+\DoxyCodeLine{99 \textcolor{preprocessor}{\#define STORED\_UNSENT                               "{}\(\backslash\)"{}STO UNSENT\(\backslash\)"{}"{}}}
+\DoxyCodeLine{100 \textcolor{preprocessor}{\#define STORED\_SENT                                 "{}\(\backslash\)"{}STO SENT\(\backslash\)"{}"{}}}
+\DoxyCodeLine{101 \textcolor{preprocessor}{\#define ALL                                         "{}\(\backslash\)"{}ALL\(\backslash\)"{}"{}}}
+\DoxyCodeLine{102 \textcolor{preprocessor}{\#define AT\_CMD\_DELETE\_SMS                           "{}CMGD"{}}}
+\DoxyCodeLine{103 \textcolor{preprocessor}{\#define DELETE\_ALL\_SMS                              4}}
+\DoxyCodeLine{104 \textcolor{preprocessor}{\#define DELETE\_ALL\_READ\_SENT\_UNSET\_SMS              3}}
+\DoxyCodeLine{105 \textcolor{preprocessor}{\#define DELETE\_ALL\_READ\_SENT\_SMS                    2}}
+\DoxyCodeLine{106 \textcolor{preprocessor}{\#define DELETE\_ALL\_READ\_SMS                         1}}
+\DoxyCodeLine{107 \textcolor{preprocessor}{\#define DELETE\_SPECIFIC\_SMS                         0}}
+\DoxyCodeLine{108 \textcolor{preprocessor}{\#define OK\_RESPONSE                                 "{}OK"{}}}
+\DoxyCodeLine{109 }
+\DoxyCodeLine{110 \textcolor{comment}{/*-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/ GPRS -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*/}}
+\DoxyCodeLine{122 \textcolor{preprocessor}{\#define AT\_CMD\_GPRS\_SERVICE             "{}AT+CGATT?"{}}}
+\DoxyCodeLine{123 \textcolor{preprocessor}{\#define AT\_CMD\_DESACT\_GPRS\_CONTEXT      "{}AT+CIPSHUT"{}}}
+\DoxyCodeLine{124 \textcolor{preprocessor}{\#define CSTT                            "{}CSTT"{}}}
+\DoxyCodeLine{125 \textcolor{preprocessor}{\#define AT\_CMD\_BRING\_UP\_GPRS\_CONEXION   "{}AT+CIICR"{}}}
+\DoxyCodeLine{126 \textcolor{preprocessor}{\#define AT\_CMD\_GET\_LOCAL\_IP             "{}AT+CIFSR"{}}}
+\DoxyCodeLine{127 \textcolor{preprocessor}{\#define AT\_CMD\_START\_TCPUDP\_CONEXION    "{}CIPSTART"{}}}
+\DoxyCodeLine{128 \textcolor{preprocessor}{\#define AT\_CMD\_CLOSE\_TCPUDP\_CONEXION    "{}AT+CIPCLOSE"{}}}
+\DoxyCodeLine{129 \textcolor{preprocessor}{\#define AT\_CMD\_SEND\_DATA\_TCPUDP         "{}AT+CIPSEND"{}}}
+\DoxyCodeLine{130 \textcolor{preprocessor}{\#define CIPMODE                         "{}CIPMODE"{}}}
+\DoxyCodeLine{131 \textcolor{preprocessor}{\#define CONNECT\_OK                      "{}CONNECT"{}}}
+\DoxyCodeLine{132 \textcolor{preprocessor}{\#define TCP                             "{}TCP"{}}}
+\DoxyCodeLine{133 \textcolor{preprocessor}{\#define UDP                             "{}UDP"{}}}
+\DoxyCodeLine{134 \textcolor{preprocessor}{\#define SEND\_OK                         "{}SEND OK"{}}}
+\DoxyCodeLine{135 \textcolor{preprocessor}{\#define CLOSE\_OK                        "{}CLOSE OK"{}}}
+\DoxyCodeLine{136 \textcolor{preprocessor}{\#define SHUT\_OK                         "{}SHUT OK"{}}}
+\DoxyCodeLine{137 \textcolor{preprocessor}{\#define TRANSPARENT\_MODE                1}}
+\DoxyCodeLine{138 \textcolor{preprocessor}{\#define COMMAND\_MODE                    0}}
+\DoxyCodeLine{139 \textcolor{comment}{/*-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*/}}
+\DoxyCodeLine{140 }
+\DoxyCodeLine{141 \textcolor{comment}{/*-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/ State of GPRS Attachment -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*/}}
+\DoxyCodeLine{142 \textcolor{preprocessor}{\#define GPRS\_DETACHED   "{}CGATT: 0"{}}}
+\DoxyCodeLine{143 \textcolor{preprocessor}{\#define GPRS\_ATTACHED   "{}CGATT: 1"{}}}
+\DoxyCodeLine{144 \textcolor{comment}{/*-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*/}}
+\DoxyCodeLine{145 }
+\DoxyCodeLine{156 \textcolor{preprocessor}{\#define SERIAL\_RESPONSE\_BUFFER\_SIZE     100}}
+\DoxyCodeLine{157 \textcolor{preprocessor}{\#define LEN\_BUFFER\_AUX\_CALL             18}}
+\DoxyCodeLine{158 \textcolor{preprocessor}{\#define LEN\_AT\_CMD\_CONFIG               15}}
+\DoxyCodeLine{159 \textcolor{preprocessor}{\#define LEN\_FORMAT\_CELL\_NUMBER          16}}
+\DoxyCodeLine{160 \textcolor{preprocessor}{\#define LEN\_FORMAT\_APN                  20}}
+\DoxyCodeLine{161 }
+\DoxyCodeLine{162 \textcolor{comment}{/*-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/ SIM initialization functions -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*/}}
+\DoxyCodeLine{163 uint8\_t SIM800\_ConfigHW(UART\_HandleTypeDef *uartHandler,Port\_t powerKeyPort, uint16\_t powerKeyPin,Port\_t resetPort, uint16\_t resetPin);}
+\DoxyCodeLine{164 uint8\_t SIM800\_Default\_ConfigHW(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{165 uint8\_t SIM800\_Init(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{166 \textcolor{keywordtype}{void}    SIM800\_On(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{167 \textcolor{keywordtype}{void}    SIM800\_Off(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{168 \textcolor{keywordtype}{void}    SIM800\_restart(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{169 }
+\DoxyCodeLine{170 \textcolor{comment}{/*-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/ Functions for SMS -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*/}}
+\DoxyCodeLine{171 uint8\_t check\_Network\_Registration(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{172 uint8\_t send\_SMS(uint8\_t *cellNumber, uint8\_t *message);}
+\DoxyCodeLine{173 uint8\_t list\_Received\_SMS\_(\textcolor{keyword}{const} uint8\_t *smsToSearch, \textcolor{keyword}{const} uint8\_t *status);}
+\DoxyCodeLine{174 uint8\_t delete\_SMS(uint8\_t index,uint8\_t flag);}
+\DoxyCodeLine{175 }
+\DoxyCodeLine{176 \textcolor{comment}{/*-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/ Functions for voice calls -\/-\/-\/-\/-\/-\/-\/-\/-\/*/}}
+\DoxyCodeLine{177 uint8\_t call(uint8\_t *cellNumber);}
+\DoxyCodeLine{178 uint8\_t endCall(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{179 }
+\DoxyCodeLine{180 \textcolor{comment}{/*-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/ Functions for GPRS -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*/}}
+\DoxyCodeLine{181 uint8\_t check\_GPRS\_Connection(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{182 uint8\_t disable\_GPRS\_PDP\_Context(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{183 uint8\_t set\_Application\_Mode\_TCPUDP(uint8\_t tcpip\_appMode);}
+\DoxyCodeLine{184 uint8\_t setAPN(uint8\_t *apn);}
+\DoxyCodeLine{185 uint8\_t bring\_Up\_Wireless\_Connection(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{186 uint8\_t start\_Up\_TCPUDP\_Connection(uint8\_t *connection, uint8\_t *ip\_address, uint8\_t *port);}
+\DoxyCodeLine{187 uint8\_t close\_TCPUDP\_Connection(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{188 uint8\_t send\_Data\_TCPUDP ( uint8\_t *data, uint8\_t tcpip\_appMode);}
+\DoxyCodeLine{189 \textcolor{keywordtype}{void}    enable\_AT\_CMD\_In\_Transparent\_Mode(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{190 }
+\DoxyCodeLine{191 }
+\DoxyCodeLine{192 \textcolor{preprocessor}{\#endif }\textcolor{comment}{/* SIM800X\_INC\_SIM800X\_H\_ */}\textcolor{preprocessor}{}}
+
+\end{DoxyCode}

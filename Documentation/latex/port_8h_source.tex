@@ -1,0 +1,67 @@
+\doxysection{port.\+h}
+\label{port_8h_source}\index{C:/Users/Jonatan/OneDrive/Escritorio/PCSE/Driver\_SIM800x/Inc/port.h@{C:/Users/Jonatan/OneDrive/Escritorio/PCSE/Driver\_SIM800x/Inc/port.h}}
+\textbf{ Go to the documentation of this file.}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 }
+\DoxyCodeLine{10 \textcolor{preprocessor}{\#ifndef SIM800X\_INC\_PORT\_H\_}}
+\DoxyCodeLine{11 \textcolor{preprocessor}{\#define SIM800X\_INC\_PORT\_H\_}}
+\DoxyCodeLine{12 }
+\DoxyCodeLine{13 \textcolor{preprocessor}{\#include <stdio.h>}}
+\DoxyCodeLine{14 \textcolor{preprocessor}{\#include <stddef.h>}}
+\DoxyCodeLine{15 \textcolor{preprocessor}{\#include <stdbool.h>}}
+\DoxyCodeLine{16 \textcolor{preprocessor}{\#include <stdint.h>}}
+\DoxyCodeLine{17 \textcolor{preprocessor}{\#include <string.h>}}
+\DoxyCodeLine{18 \textcolor{preprocessor}{\#include "{}stm32f4xx\_hal.h"{}}}
+\DoxyCodeLine{19 }
+\DoxyCodeLine{24 \textcolor{keyword}{typedef} \textcolor{keywordtype}{bool} bool\_t;}
+\DoxyCodeLine{25 }
+\DoxyCodeLine{30 \textcolor{keyword}{typedef} \textcolor{keyword}{enum}}
+\DoxyCodeLine{31 \{}
+\DoxyCodeLine{32     PORTA = 0,}
+\DoxyCodeLine{33     PORTB = 1,}
+\DoxyCodeLine{34     PORTC = 2}
+\DoxyCodeLine{35 \}Port\_t;}
+\DoxyCodeLine{36 }
+\DoxyCodeLine{56 \textcolor{preprocessor}{\#define DEFAULT\_POWERKEY\_PIN                        GPIO\_PIN\_0}}
+\DoxyCodeLine{57 \textcolor{preprocessor}{\#define DEFAULT\_POWERKEY\_GPIO\_PORT                  GPIOB}}
+\DoxyCodeLine{58 \textcolor{preprocessor}{\#define DEFAULT\_POWERKEY\_GPIO\_CLK\_ENABLE()          \_\_HAL\_RCC\_GPIOB\_CLK\_ENABLE();}}
+\DoxyCodeLine{59 }
+\DoxyCodeLine{60 \textcolor{preprocessor}{\#define DEFAULT\_RST\_PIN                             GPIO\_PIN\_1}}
+\DoxyCodeLine{61 \textcolor{preprocessor}{\#define DEFAULT\_RST\_GPIO\_PORT                       GPIOB}}
+\DoxyCodeLine{62 \textcolor{preprocessor}{\#define DEFAULT\_RST\_GPIO\_CLK\_ENABLE()               \_\_HAL\_RCC\_GPIOB\_CLK\_ENABLE();}}
+\DoxyCodeLine{63 }
+\DoxyCodeLine{64 \textcolor{preprocessor}{\#define PINn                                        16U}}
+\DoxyCodeLine{65 \textcolor{preprocessor}{\#define PWRKEY\_ON                                   GPIO\_PIN\_SET}}
+\DoxyCodeLine{66 \textcolor{preprocessor}{\#define PWRKEY\_OFF                                  GPIO\_PIN\_RESET}}
+\DoxyCodeLine{67 \textcolor{preprocessor}{\#define RST\_ON                                      GPIO\_PIN\_RESET}}
+\DoxyCodeLine{68 \textcolor{preprocessor}{\#define RST\_OFF                                     GPIO\_PIN\_SET}}
+\DoxyCodeLine{69 \textcolor{preprocessor}{\#define DELAY\_POWER\_ON                              1500L}}
+\DoxyCodeLine{70 \textcolor{preprocessor}{\#define DELAY\_ENTRY\_ACTIVE                          15000L}}
+\DoxyCodeLine{71 \textcolor{preprocessor}{\#define DELAY\_POWER\_DOWN                            2000L}}
+\DoxyCodeLine{72 \textcolor{preprocessor}{\#define DELAY\_ENTRY\_IDLE                            3000L}}
+\DoxyCodeLine{73 \textcolor{preprocessor}{\#define DELAY\_RESET                                 200L}}
+\DoxyCodeLine{74 }
+\DoxyCodeLine{75 \textcolor{preprocessor}{\#define DEFAULT\_USART                               USART1}}
+\DoxyCodeLine{76 \textcolor{preprocessor}{\#define DEFAULT\_BAUD\_RATE                           9600LU}}
+\DoxyCodeLine{77 \textcolor{preprocessor}{\#define MAX\_BAUD\_RATE                               115200LU}}
+\DoxyCodeLine{78 \textcolor{preprocessor}{\#define TIMEOUT                                     1000L}}
+\DoxyCodeLine{79 \textcolor{preprocessor}{\#define MAX\_BUFFER\_SIZE                             50U}}
+\DoxyCodeLine{80 }
+\DoxyCodeLine{81 \textcolor{preprocessor}{\#define SUCCESSFUL                                  true}}
+\DoxyCodeLine{82 \textcolor{preprocessor}{\#define UNSUCCESSFUL                                false}}
+\DoxyCodeLine{83 }
+\DoxyCodeLine{84 bool\_t            config\_UART\_SIM(UART\_HandleTypeDef *uartHandler);}
+\DoxyCodeLine{85 bool\_t            config\_Default\_SIM();}
+\DoxyCodeLine{86 \textcolor{keywordtype}{void}            initPowerKeyPin(Port\_t portX, uint16\_t powerKeyPin);}
+\DoxyCodeLine{87 \textcolor{keywordtype}{void}            initResetPin(Port\_t portX, uint16\_t resetPin);}
+\DoxyCodeLine{88 \textcolor{keywordtype}{void}            power\_On\_SIM();}
+\DoxyCodeLine{89 \textcolor{keywordtype}{void}            power\_Down\_SIM();}
+\DoxyCodeLine{90 \textcolor{keywordtype}{void}            restart\_SIM();}
+\DoxyCodeLine{91 \textcolor{keywordtype}{void}            keep\_Reset\_SIM();}
+\DoxyCodeLine{92 \textcolor{keywordtype}{void}            exit\_Reset\_SIM();}
+\DoxyCodeLine{93 \textcolor{keywordtype}{void}            write\_Data\_UART(uint8\_t *pDataTx);}
+\DoxyCodeLine{94 uint8\_t         read\_Data\_UART();}
+\DoxyCodeLine{95 }
+\DoxyCodeLine{96 \textcolor{preprocessor}{\#endif }\textcolor{comment}{/* SIM800X\_INC\_PORT\_H\_ */}\textcolor{preprocessor}{}}
+
+\end{DoxyCode}

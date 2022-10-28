@@ -1,0 +1,570 @@
+\doxysection{C\+:/\+Users/\+Jonatan/\+One\+Drive/\+Escritorio/\+PCSE/\+Driver\+\_\+\+SIM800x/\+Inc/port.h File Reference}
+\label{port_8h}\index{C:/Users/Jonatan/OneDrive/Escritorio/PCSE/Driver\_SIM800x/Inc/port.h@{C:/Users/Jonatan/OneDrive/Escritorio/PCSE/Driver\_SIM800x/Inc/port.h}}
+
+
+This file uses the HAL functions, for the configuration of the hardware required for SIM800 handling\+: UART and GPIO.  
+
+
+{\ttfamily \#include $<$stdio.\+h$>$}\newline
+{\ttfamily \#include $<$stddef.\+h$>$}\newline
+{\ttfamily \#include $<$stdbool.\+h$>$}\newline
+{\ttfamily \#include $<$stdint.\+h$>$}\newline
+{\ttfamily \#include $<$string.\+h$>$}\newline
+{\ttfamily \#include \char`\"{}stm32f4xx\+\_\+hal.\+h\char`\"{}}\newline
+\doxysubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \textbf{ DEFAULT\+\_\+\+POWERKEY\+\_\+\+PIN}~GPIO\+\_\+\+PIN\+\_\+0
+\item 
+\#define \textbf{ DEFAULT\+\_\+\+POWERKEY\+\_\+\+GPIO\+\_\+\+PORT}~GPIOB
+\item 
+\#define \textbf{ DEFAULT\+\_\+\+POWERKEY\+\_\+\+GPIO\+\_\+\+CLK\+\_\+\+ENABLE}()~\+\_\+\+\_\+\+HAL\+\_\+\+RCC\+\_\+\+GPIOB\+\_\+\+CLK\+\_\+\+ENABLE();
+\item 
+\#define \textbf{ DEFAULT\+\_\+\+RST\+\_\+\+PIN}~GPIO\+\_\+\+PIN\+\_\+1
+\item 
+\#define \textbf{ DEFAULT\+\_\+\+RST\+\_\+\+GPIO\+\_\+\+PORT}~GPIOB
+\item 
+\#define \textbf{ DEFAULT\+\_\+\+RST\+\_\+\+GPIO\+\_\+\+CLK\+\_\+\+ENABLE}()~\+\_\+\+\_\+\+HAL\+\_\+\+RCC\+\_\+\+GPIOB\+\_\+\+CLK\+\_\+\+ENABLE();
+\item 
+\#define \textbf{ PINn}~16U
+\begin{DoxyCompactList}\small\item\em Defines the number of pins available per port. \end{DoxyCompactList}\item 
+\#define \textbf{ PWRKEY\+\_\+\+ON}~GPIO\+\_\+\+PIN\+\_\+\+SET
+\item 
+\#define \textbf{ PWRKEY\+\_\+\+OFF}~GPIO\+\_\+\+PIN\+\_\+\+RESET
+\item 
+\#define \textbf{ RST\+\_\+\+ON}~GPIO\+\_\+\+PIN\+\_\+\+RESET
+\item 
+\#define \textbf{ RST\+\_\+\+OFF}~GPIO\+\_\+\+PIN\+\_\+\+SET
+\item 
+\#define \textbf{ DELAY\+\_\+\+POWER\+\_\+\+ON}~1500L
+\begin{DoxyCompactList}\small\item\em Defines the minimum time the power\+Key pin must be high to turn on the SIM. \end{DoxyCompactList}\item 
+\#define \textbf{ DELAY\+\_\+\+ENTRY\+\_\+\+ACTIVE}~15000L
+\begin{DoxyCompactList}\small\item\em Defines the time to wait until the SIM stops sending startup messages over the UART. \end{DoxyCompactList}\item 
+\#define \textbf{ DELAY\+\_\+\+POWER\+\_\+\+DOWN}~2000L
+\begin{DoxyCompactList}\small\item\em Defines the minimum time the power\+Key pin must be high to turn off the SIM. \end{DoxyCompactList}\item 
+\#define \textbf{ DELAY\+\_\+\+ENTRY\+\_\+\+IDLE}~3000L
+\begin{DoxyCompactList}\small\item\em Defines the time to wait until the UART goes to the idle state. \end{DoxyCompactList}\item 
+\#define \textbf{ DELAY\+\_\+\+RESET}~200L
+\begin{DoxyCompactList}\small\item\em Defines the minimum time the reset pin must be high to restart the SIM. \end{DoxyCompactList}\item 
+\#define \textbf{ DEFAULT\+\_\+\+USART}~USART1
+\item 
+\#define \textbf{ DEFAULT\+\_\+\+BAUD\+\_\+\+RATE}~9600\+LU
+\item 
+\#define \textbf{ MAX\+\_\+\+BAUD\+\_\+\+RATE}~115200\+LU
+\item 
+\#define \textbf{ TIMEOUT}~1000L
+\item 
+\#define \textbf{ MAX\+\_\+\+BUFFER\+\_\+\+SIZE}~50U
+\item 
+\#define \textbf{ SUCCESSFUL}~true
+\item 
+\#define \textbf{ UNSUCCESSFUL}~false
+\end{DoxyCompactItemize}
+\doxysubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef bool \textbf{ bool\+\_\+t}
+\begin{DoxyCompactList}\small\item\em A type definition for bool. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \textbf{ Port\+\_\+t} \{ \textbf{ PORTA} = 0
+, \textbf{ PORTB} = 1
+, \textbf{ PORTC} = 2
+ \}
+\begin{DoxyCompactList}\small\item\em Type of enumeration for Black\+Pill ports. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\textbf{ bool\+\_\+t} \textbf{ config\+\_\+\+UART\+\_\+\+SIM} (UART\+\_\+\+Handle\+Type\+Def $\ast$uart\+Handler)
+\begin{DoxyCompactList}\small\item\em Initializes the UART peripheral passed as a parameter for communication with the SIM800x. \end{DoxyCompactList}\item 
+\textbf{ bool\+\_\+t} \textbf{ config\+\_\+\+Default\+\_\+\+SIM} ()
+\begin{DoxyCompactList}\small\item\em Set the default initialization parameters for the USART as well as for the reset and powerkey pins. \end{DoxyCompactList}\item 
+void \textbf{ init\+Power\+Key\+Pin} (\textbf{ Port\+\_\+t} portX, uint16\+\_\+t power\+Key\+Pin)
+\begin{DoxyCompactList}\small\item\em Set the GPIO port and pin assigned to power\+Key. \end{DoxyCompactList}\item 
+void \textbf{ init\+Reset\+Pin} (\textbf{ Port\+\_\+t} portX, uint16\+\_\+t reset\+Pin)
+\begin{DoxyCompactList}\small\item\em Set the GPIO port and pin assigned to reset. \end{DoxyCompactList}\item 
+void \textbf{ power\+\_\+\+On\+\_\+\+SIM} ()
+\begin{DoxyCompactList}\small\item\em Turn on the SIM. \end{DoxyCompactList}\item 
+void \textbf{ power\+\_\+\+Down\+\_\+\+SIM} ()
+\begin{DoxyCompactList}\small\item\em Turn off the SIM. \end{DoxyCompactList}\item 
+void \textbf{ restart\+\_\+\+SIM} ()
+\begin{DoxyCompactList}\small\item\em Reset the SIM. \end{DoxyCompactList}\item 
+void \textbf{ keep\+\_\+\+Reset\+\_\+\+SIM} ()
+\begin{DoxyCompactList}\small\item\em Keeps the SIM in a reset state. \end{DoxyCompactList}\item 
+void \textbf{ exit\+\_\+\+Reset\+\_\+\+SIM} ()
+\begin{DoxyCompactList}\small\item\em Releases the SIM from the permanent reset state. \end{DoxyCompactList}\item 
+void \textbf{ write\+\_\+\+Data\+\_\+\+UART} (uint8\+\_\+t $\ast$p\+Data\+Tx)
+\begin{DoxyCompactList}\small\item\em Sends a string of data over the specified UART peripheral. \end{DoxyCompactList}\item 
+uint8\+\_\+t \textbf{ read\+\_\+\+Data\+\_\+\+UART} ()
+\begin{DoxyCompactList}\small\item\em Reads a byte over the UART and stores it in the serial\+UARTBuffer array. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+This file uses the HAL functions, for the configuration of the hardware required for SIM800 handling\+: UART and GPIO. 
+
+\begin{DoxyVersion}{Version}
+1.\+0 
+\end{DoxyVersion}
+\begin{DoxyDate}{Date}
+24/10/2022 
+\end{DoxyDate}
+\begin{DoxyAuthor}{Author}
+Yonatan Aguirre 
+\end{DoxyAuthor}
+
+
+\doxysubsection{Macro Definition Documentation}
+\mbox{\label{port_8h_a68654b05f39a5e88db0453de6f7fd726}} 
+\index{port.h@{port.h}!DEFAULT\_BAUD\_RATE@{DEFAULT\_BAUD\_RATE}}
+\index{DEFAULT\_BAUD\_RATE@{DEFAULT\_BAUD\_RATE}!port.h@{port.h}}
+\doxysubsubsection{DEFAULT\_BAUD\_RATE}
+{\footnotesize\ttfamily \#define DEFAULT\+\_\+\+BAUD\+\_\+\+RATE~9600\+LU}
+
+\mbox{\label{port_8h_a9c600f26dcfc3a287255601c2c3091b6}} 
+\index{port.h@{port.h}!DEFAULT\_POWERKEY\_GPIO\_CLK\_ENABLE@{DEFAULT\_POWERKEY\_GPIO\_CLK\_ENABLE}}
+\index{DEFAULT\_POWERKEY\_GPIO\_CLK\_ENABLE@{DEFAULT\_POWERKEY\_GPIO\_CLK\_ENABLE}!port.h@{port.h}}
+\doxysubsubsection{DEFAULT\_POWERKEY\_GPIO\_CLK\_ENABLE}
+{\footnotesize\ttfamily \#define DEFAULT\+\_\+\+POWERKEY\+\_\+\+GPIO\+\_\+\+CLK\+\_\+\+ENABLE(\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})~\+\_\+\+\_\+\+HAL\+\_\+\+RCC\+\_\+\+GPIOB\+\_\+\+CLK\+\_\+\+ENABLE();}
+
+\mbox{\label{port_8h_aa3173e5e3bfcd5bf1204cb1dbe50589f}} 
+\index{port.h@{port.h}!DEFAULT\_POWERKEY\_GPIO\_PORT@{DEFAULT\_POWERKEY\_GPIO\_PORT}}
+\index{DEFAULT\_POWERKEY\_GPIO\_PORT@{DEFAULT\_POWERKEY\_GPIO\_PORT}!port.h@{port.h}}
+\doxysubsubsection{DEFAULT\_POWERKEY\_GPIO\_PORT}
+{\footnotesize\ttfamily \#define DEFAULT\+\_\+\+POWERKEY\+\_\+\+GPIO\+\_\+\+PORT~GPIOB}
+
+\mbox{\label{port_8h_a4cd81b71ad82ae8926436a27f397a379}} 
+\index{port.h@{port.h}!DEFAULT\_POWERKEY\_PIN@{DEFAULT\_POWERKEY\_PIN}}
+\index{DEFAULT\_POWERKEY\_PIN@{DEFAULT\_POWERKEY\_PIN}!port.h@{port.h}}
+\doxysubsubsection{DEFAULT\_POWERKEY\_PIN}
+{\footnotesize\ttfamily \#define DEFAULT\+\_\+\+POWERKEY\+\_\+\+PIN~GPIO\+\_\+\+PIN\+\_\+0}
+
+\mbox{\label{port_8h_ac717060f3a474007a6c81298062e0098}} 
+\index{port.h@{port.h}!DEFAULT\_RST\_GPIO\_CLK\_ENABLE@{DEFAULT\_RST\_GPIO\_CLK\_ENABLE}}
+\index{DEFAULT\_RST\_GPIO\_CLK\_ENABLE@{DEFAULT\_RST\_GPIO\_CLK\_ENABLE}!port.h@{port.h}}
+\doxysubsubsection{DEFAULT\_RST\_GPIO\_CLK\_ENABLE}
+{\footnotesize\ttfamily \#define DEFAULT\+\_\+\+RST\+\_\+\+GPIO\+\_\+\+CLK\+\_\+\+ENABLE(\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})~\+\_\+\+\_\+\+HAL\+\_\+\+RCC\+\_\+\+GPIOB\+\_\+\+CLK\+\_\+\+ENABLE();}
+
+\mbox{\label{port_8h_a8a1f0fd5e992048835c00897245ac87e}} 
+\index{port.h@{port.h}!DEFAULT\_RST\_GPIO\_PORT@{DEFAULT\_RST\_GPIO\_PORT}}
+\index{DEFAULT\_RST\_GPIO\_PORT@{DEFAULT\_RST\_GPIO\_PORT}!port.h@{port.h}}
+\doxysubsubsection{DEFAULT\_RST\_GPIO\_PORT}
+{\footnotesize\ttfamily \#define DEFAULT\+\_\+\+RST\+\_\+\+GPIO\+\_\+\+PORT~GPIOB}
+
+\mbox{\label{port_8h_a20243a347c78f90547b2759e8061c60e}} 
+\index{port.h@{port.h}!DEFAULT\_RST\_PIN@{DEFAULT\_RST\_PIN}}
+\index{DEFAULT\_RST\_PIN@{DEFAULT\_RST\_PIN}!port.h@{port.h}}
+\doxysubsubsection{DEFAULT\_RST\_PIN}
+{\footnotesize\ttfamily \#define DEFAULT\+\_\+\+RST\+\_\+\+PIN~GPIO\+\_\+\+PIN\+\_\+1}
+
+\mbox{\label{port_8h_a53a230563b237c57e69ee6d9df773570}} 
+\index{port.h@{port.h}!DEFAULT\_USART@{DEFAULT\_USART}}
+\index{DEFAULT\_USART@{DEFAULT\_USART}!port.h@{port.h}}
+\doxysubsubsection{DEFAULT\_USART}
+{\footnotesize\ttfamily \#define DEFAULT\+\_\+\+USART~USART1}
+
+\mbox{\label{port_8h_a43fd4f3fe271f986d24dd8bd10a5a562}} 
+\index{port.h@{port.h}!DELAY\_ENTRY\_ACTIVE@{DELAY\_ENTRY\_ACTIVE}}
+\index{DELAY\_ENTRY\_ACTIVE@{DELAY\_ENTRY\_ACTIVE}!port.h@{port.h}}
+\doxysubsubsection{DELAY\_ENTRY\_ACTIVE}
+{\footnotesize\ttfamily \#define DELAY\+\_\+\+ENTRY\+\_\+\+ACTIVE~15000L}
+
+
+
+Defines the time to wait until the SIM stops sending startup messages over the UART. 
+
+\mbox{\label{port_8h_ac566db0a84dce544242ff97abebbd3b3}} 
+\index{port.h@{port.h}!DELAY\_ENTRY\_IDLE@{DELAY\_ENTRY\_IDLE}}
+\index{DELAY\_ENTRY\_IDLE@{DELAY\_ENTRY\_IDLE}!port.h@{port.h}}
+\doxysubsubsection{DELAY\_ENTRY\_IDLE}
+{\footnotesize\ttfamily \#define DELAY\+\_\+\+ENTRY\+\_\+\+IDLE~3000L}
+
+
+
+Defines the time to wait until the UART goes to the idle state. 
+
+\mbox{\label{port_8h_af6319fe11148458056d31119b789df4e}} 
+\index{port.h@{port.h}!DELAY\_POWER\_DOWN@{DELAY\_POWER\_DOWN}}
+\index{DELAY\_POWER\_DOWN@{DELAY\_POWER\_DOWN}!port.h@{port.h}}
+\doxysubsubsection{DELAY\_POWER\_DOWN}
+{\footnotesize\ttfamily \#define DELAY\+\_\+\+POWER\+\_\+\+DOWN~2000L}
+
+
+
+Defines the minimum time the power\+Key pin must be high to turn off the SIM. 
+
+\mbox{\label{port_8h_ae9e0ea4f98c6b0aaf8ca231bb1d64005}} 
+\index{port.h@{port.h}!DELAY\_POWER\_ON@{DELAY\_POWER\_ON}}
+\index{DELAY\_POWER\_ON@{DELAY\_POWER\_ON}!port.h@{port.h}}
+\doxysubsubsection{DELAY\_POWER\_ON}
+{\footnotesize\ttfamily \#define DELAY\+\_\+\+POWER\+\_\+\+ON~1500L}
+
+
+
+Defines the minimum time the power\+Key pin must be high to turn on the SIM. 
+
+\mbox{\label{port_8h_a11d420c91722ad72504b38164492b8fa}} 
+\index{port.h@{port.h}!DELAY\_RESET@{DELAY\_RESET}}
+\index{DELAY\_RESET@{DELAY\_RESET}!port.h@{port.h}}
+\doxysubsubsection{DELAY\_RESET}
+{\footnotesize\ttfamily \#define DELAY\+\_\+\+RESET~200L}
+
+
+
+Defines the minimum time the reset pin must be high to restart the SIM. 
+
+\mbox{\label{port_8h_a3933413221fd817e6a0a4c7abc30513a}} 
+\index{port.h@{port.h}!MAX\_BAUD\_RATE@{MAX\_BAUD\_RATE}}
+\index{MAX\_BAUD\_RATE@{MAX\_BAUD\_RATE}!port.h@{port.h}}
+\doxysubsubsection{MAX\_BAUD\_RATE}
+{\footnotesize\ttfamily \#define MAX\+\_\+\+BAUD\+\_\+\+RATE~115200\+LU}
+
+\mbox{\label{port_8h_ad4d796b98c583d49e83adabd74a63bf6}} 
+\index{port.h@{port.h}!MAX\_BUFFER\_SIZE@{MAX\_BUFFER\_SIZE}}
+\index{MAX\_BUFFER\_SIZE@{MAX\_BUFFER\_SIZE}!port.h@{port.h}}
+\doxysubsubsection{MAX\_BUFFER\_SIZE}
+{\footnotesize\ttfamily \#define MAX\+\_\+\+BUFFER\+\_\+\+SIZE~50U}
+
+\mbox{\label{port_8h_acc21e79c8e58fad65b9ff319261de087}} 
+\index{port.h@{port.h}!PINn@{PINn}}
+\index{PINn@{PINn}!port.h@{port.h}}
+\doxysubsubsection{PINn}
+{\footnotesize\ttfamily \#define PINn~16U}
+
+
+
+Defines the number of pins available per port. 
+
+\mbox{\label{port_8h_a5b2262437c31a02feee5c13eed7e8b21}} 
+\index{port.h@{port.h}!PWRKEY\_OFF@{PWRKEY\_OFF}}
+\index{PWRKEY\_OFF@{PWRKEY\_OFF}!port.h@{port.h}}
+\doxysubsubsection{PWRKEY\_OFF}
+{\footnotesize\ttfamily \#define PWRKEY\+\_\+\+OFF~GPIO\+\_\+\+PIN\+\_\+\+RESET}
+
+\mbox{\label{port_8h_a668703d28668ca9e3c45e59e9b88e628}} 
+\index{port.h@{port.h}!PWRKEY\_ON@{PWRKEY\_ON}}
+\index{PWRKEY\_ON@{PWRKEY\_ON}!port.h@{port.h}}
+\doxysubsubsection{PWRKEY\_ON}
+{\footnotesize\ttfamily \#define PWRKEY\+\_\+\+ON~GPIO\+\_\+\+PIN\+\_\+\+SET}
+
+\mbox{\label{port_8h_aa130c364fd553d9aea108d889c1e381b}} 
+\index{port.h@{port.h}!RST\_OFF@{RST\_OFF}}
+\index{RST\_OFF@{RST\_OFF}!port.h@{port.h}}
+\doxysubsubsection{RST\_OFF}
+{\footnotesize\ttfamily \#define RST\+\_\+\+OFF~GPIO\+\_\+\+PIN\+\_\+\+SET}
+
+\mbox{\label{port_8h_aefcca24e748a50b2a5d1aa4d8c96cd41}} 
+\index{port.h@{port.h}!RST\_ON@{RST\_ON}}
+\index{RST\_ON@{RST\_ON}!port.h@{port.h}}
+\doxysubsubsection{RST\_ON}
+{\footnotesize\ttfamily \#define RST\+\_\+\+ON~GPIO\+\_\+\+PIN\+\_\+\+RESET}
+
+\mbox{\label{port_8h_a1be7a56cdddcdb7dedf16d4dee381e93}} 
+\index{port.h@{port.h}!SUCCESSFUL@{SUCCESSFUL}}
+\index{SUCCESSFUL@{SUCCESSFUL}!port.h@{port.h}}
+\doxysubsubsection{SUCCESSFUL}
+{\footnotesize\ttfamily \#define SUCCESSFUL~true}
+
+\mbox{\label{port_8h_a45ba202b05caf39795aeca91b0ae547e}} 
+\index{port.h@{port.h}!TIMEOUT@{TIMEOUT}}
+\index{TIMEOUT@{TIMEOUT}!port.h@{port.h}}
+\doxysubsubsection{TIMEOUT}
+{\footnotesize\ttfamily \#define TIMEOUT~1000L}
+
+\mbox{\label{port_8h_a82d981577abb57f929bc8eeb48d2678d}} 
+\index{port.h@{port.h}!UNSUCCESSFUL@{UNSUCCESSFUL}}
+\index{UNSUCCESSFUL@{UNSUCCESSFUL}!port.h@{port.h}}
+\doxysubsubsection{UNSUCCESSFUL}
+{\footnotesize\ttfamily \#define UNSUCCESSFUL~false}
+
+
+
+\doxysubsection{Typedef Documentation}
+\mbox{\label{port_8h_a04dd5074964518403bf944f2b240a5f8}} 
+\index{port.h@{port.h}!bool\_t@{bool\_t}}
+\index{bool\_t@{bool\_t}!port.h@{port.h}}
+\doxysubsubsection{bool\_t}
+{\footnotesize\ttfamily \textbf{ bool\+\_\+t}}
+
+
+
+A type definition for bool. 
+
+
+
+\doxysubsection{Enumeration Type Documentation}
+\mbox{\label{port_8h_a688b44052db0f30b560460cb5561065f}} 
+\index{port.h@{port.h}!Port\_t@{Port\_t}}
+\index{Port\_t@{Port\_t}!port.h@{port.h}}
+\doxysubsubsection{Port\_t}
+{\footnotesize\ttfamily enum \textbf{ Port\+\_\+t}}
+
+
+
+Type of enumeration for Black\+Pill ports. 
+
+\begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{PORTA@{PORTA}!port.h@{port.h}}\index{port.h@{port.h}!PORTA@{PORTA}}}\mbox{\label{port_8h_a688b44052db0f30b560460cb5561065fae3201f6e0d0c1e138c60903276bb3859}} 
+PORTA&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{PORTB@{PORTB}!port.h@{port.h}}\index{port.h@{port.h}!PORTB@{PORTB}}}\mbox{\label{port_8h_a688b44052db0f30b560460cb5561065fae51dea4a37f3e2ede7ba6f27c563f6a4}} 
+PORTB&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{PORTC@{PORTC}!port.h@{port.h}}\index{port.h@{port.h}!PORTC@{PORTC}}}\mbox{\label{port_8h_a688b44052db0f30b560460cb5561065fafcec7c36cc8137e94db854fdec9d2d50}} 
+PORTC&\\
+\hline
+
+\end{DoxyEnumFields}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\label{port_8h_a325a179aebf858595639b49514c93b7e}} 
+\index{port.h@{port.h}!config\_Default\_SIM@{config\_Default\_SIM}}
+\index{config\_Default\_SIM@{config\_Default\_SIM}!port.h@{port.h}}
+\doxysubsubsection{config\_Default\_SIM()}
+{\footnotesize\ttfamily \textbf{ bool\+\_\+t} config\+\_\+\+Default\+\_\+\+SIM (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Set the default initialization parameters for the USART as well as for the reset and powerkey pins. 
+
+\begin{DoxyNote}{Note}
+The default parameters are as follows\+: USART \+: USART1, Baud rate\+:9600, Bits\+:8, Parity\+: None, Stop bits\+: 1 Power\+Key Pin\+: PIN\+\_\+\+B0, initial state\+: OFF Reset Pin \+: PIN\+\_\+\+B1, initial state\+: ON In addition, the SIM remains turn off and reset until the power\+\_\+\+On\+\_\+\+SIM function is used. This is because some modules do not have the power\+Key pin, so we reset the SIM. 
+\end{DoxyNote}
+
+\begin{DoxyParams}{Parameters}
+{\em None.} & \\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em Initialization} & status. If the initialization was successful it returns true, otherwise it returns false. \\
+\hline
+\end{DoxyRetVals}
+\mbox{\label{port_8h_a8b50f8b67a74834aeeebf496e78d4231}} 
+\index{port.h@{port.h}!config\_UART\_SIM@{config\_UART\_SIM}}
+\index{config\_UART\_SIM@{config\_UART\_SIM}!port.h@{port.h}}
+\doxysubsubsection{config\_UART\_SIM()}
+{\footnotesize\ttfamily \textbf{ bool\+\_\+t} config\+\_\+\+UART\+\_\+\+SIM (\begin{DoxyParamCaption}\item[{UART\+\_\+\+Handle\+Type\+Def $\ast$}]{uart\+Handler }\end{DoxyParamCaption})}
+
+
+
+Initializes the UART peripheral passed as a parameter for communication with the SIM800x. 
+
+\begin{DoxyNote}{Note}
+This function only works with USARTx other than USART1, because USART1 is used by default. 
+\end{DoxyNote}
+
+\begin{DoxyParams}{Parameters}
+{\em Uart\+Handle} & pointer to the UART\+\_\+\+Handle structure. \\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em Initialization} & status. If the initialization was successful it returns true, otherwise it returns false. \\
+\hline
+\end{DoxyRetVals}
+\mbox{\label{port_8h_a7e52353c709e02b8b53e1b6069bc7e61}} 
+\index{port.h@{port.h}!exit\_Reset\_SIM@{exit\_Reset\_SIM}}
+\index{exit\_Reset\_SIM@{exit\_Reset\_SIM}!port.h@{port.h}}
+\doxysubsubsection{exit\_Reset\_SIM()}
+{\footnotesize\ttfamily void exit\+\_\+\+Reset\+\_\+\+SIM (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Releases the SIM from the permanent reset state. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em None.} & \\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em None.} & \\
+\hline
+\end{DoxyRetVals}
+\mbox{\label{port_8h_a23784f254820e54cdca5e17c7d628c5f}} 
+\index{port.h@{port.h}!initPowerKeyPin@{initPowerKeyPin}}
+\index{initPowerKeyPin@{initPowerKeyPin}!port.h@{port.h}}
+\doxysubsubsection{initPowerKeyPin()}
+{\footnotesize\ttfamily void init\+Power\+Key\+Pin (\begin{DoxyParamCaption}\item[{\textbf{ Port\+\_\+t}}]{portX,  }\item[{uint16\+\_\+t}]{power\+Key\+Pin }\end{DoxyParamCaption})}
+
+
+
+Set the GPIO port and pin assigned to power\+Key. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em GPIOx} & specified by an enumeration type Port\+\_\+t, where x can be A$\vert$\+B$\vert$C \\
+\hline
+{\em GPIO\+\_\+\+Pin} & specifies the port bit to be written, where Pin can be [0..15] \\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em None.} & \\
+\hline
+\end{DoxyRetVals}
+\mbox{\label{port_8h_a5c6d3687ba3c56563d9bbbfa9324cd52}} 
+\index{port.h@{port.h}!initResetPin@{initResetPin}}
+\index{initResetPin@{initResetPin}!port.h@{port.h}}
+\doxysubsubsection{initResetPin()}
+{\footnotesize\ttfamily void init\+Reset\+Pin (\begin{DoxyParamCaption}\item[{\textbf{ Port\+\_\+t}}]{portX,  }\item[{uint16\+\_\+t}]{reset\+Pin }\end{DoxyParamCaption})}
+
+
+
+Set the GPIO port and pin assigned to reset. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em GPIOx} & specified by an enumeration type Port\+\_\+t, where x can be A$\vert$\+B$\vert$C \\
+\hline
+{\em GPIO\+\_\+\+Pin} & specifies the port bit to be written, where Pin can be [0..15] \\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em None.} & \\
+\hline
+\end{DoxyRetVals}
+\mbox{\label{port_8h_ad99ef5f49361199fbcd8e63500df725d}} 
+\index{port.h@{port.h}!keep\_Reset\_SIM@{keep\_Reset\_SIM}}
+\index{keep\_Reset\_SIM@{keep\_Reset\_SIM}!port.h@{port.h}}
+\doxysubsubsection{keep\_Reset\_SIM()}
+{\footnotesize\ttfamily void keep\+\_\+\+Reset\+\_\+\+SIM (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Keeps the SIM in a reset state. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em None.} & \\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em None.} & \\
+\hline
+\end{DoxyRetVals}
+\mbox{\label{port_8h_a704bc80b8743aa1896ecd39a8ea9abba}} 
+\index{port.h@{port.h}!power\_Down\_SIM@{power\_Down\_SIM}}
+\index{power\_Down\_SIM@{power\_Down\_SIM}!port.h@{port.h}}
+\doxysubsubsection{power\_Down\_SIM()}
+{\footnotesize\ttfamily void power\+\_\+\+Down\+\_\+\+SIM (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Turn off the SIM. 
+
+\begin{DoxyNote}{Note}
+The start-\/up sequence is as follows\+:
+\begin{DoxyEnumerate}
+\item Hold the power\+Key pin high for at least 1.\+5s and then set it low. This is specified in the Hardware Design Guide v1.\+9, page 23.
+\item Wait a time of at least 3s for the SIM UART to to wait for the UART SIM goes to the idle state. 
+\end{DoxyEnumerate}
+\end{DoxyNote}
+
+\begin{DoxyParams}{Parameters}
+{\em None.} & \\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em None.} & \\
+\hline
+\end{DoxyRetVals}
+\mbox{\label{port_8h_aef844c4fed5056ec284639ad378633c4}} 
+\index{port.h@{port.h}!power\_On\_SIM@{power\_On\_SIM}}
+\index{power\_On\_SIM@{power\_On\_SIM}!port.h@{port.h}}
+\doxysubsubsection{power\_On\_SIM()}
+{\footnotesize\ttfamily void power\+\_\+\+On\+\_\+\+SIM (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Turn on the SIM. 
+
+\begin{DoxyNote}{Note}
+The start-\/up sequence is as follows\+:
+\begin{DoxyEnumerate}
+\item Hold the power\+Key pin high for a time of at least 1s and then set it low. This is specified in the Hardware Design Guide v1.\+9, page 22.
+\item Wait a time of at least 15s for the SIM UART to be released. On power-\/up, the SIM sends some initial status messages over the UART, which are not relevant, so we wait for this time. 
+\end{DoxyEnumerate}
+\end{DoxyNote}
+
+\begin{DoxyParams}{Parameters}
+{\em None.} & \\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em None.} & \\
+\hline
+\end{DoxyRetVals}
+\mbox{\label{port_8h_ae19c6f8d8b2d05d261500197c0601285}} 
+\index{port.h@{port.h}!read\_Data\_UART@{read\_Data\_UART}}
+\index{read\_Data\_UART@{read\_Data\_UART}!port.h@{port.h}}
+\doxysubsubsection{read\_Data\_UART()}
+{\footnotesize\ttfamily uint8\+\_\+t read\+\_\+\+Data\+\_\+\+UART (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Reads a byte over the UART and stores it in the serial\+UARTBuffer array. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em None.} & \\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em The} & first element of the array serial\+UARTBuffer, containing the data byte read. \\
+\hline
+\end{DoxyRetVals}
+\mbox{\label{port_8h_ace5a78234411625efbe312c3adcff374}} 
+\index{port.h@{port.h}!restart\_SIM@{restart\_SIM}}
+\index{restart\_SIM@{restart\_SIM}!port.h@{port.h}}
+\doxysubsubsection{restart\_SIM()}
+{\footnotesize\ttfamily void restart\+\_\+\+SIM (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Reset the SIM. 
+
+\begin{DoxyNote}{Note}
+Resetting consists of holding the reset pin high for at least 105ms and then set it low. This is specified in the Hardware Design Guide v1.\+9, page 25 -\/ Table 6. 
+\end{DoxyNote}
+
+\begin{DoxyParams}{Parameters}
+{\em None.} & \\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em None.} & \\
+\hline
+\end{DoxyRetVals}
+\mbox{\label{port_8h_a6dff3b9782e426be4ece741cb29833e7}} 
+\index{port.h@{port.h}!write\_Data\_UART@{write\_Data\_UART}}
+\index{write\_Data\_UART@{write\_Data\_UART}!port.h@{port.h}}
+\doxysubsubsection{write\_Data\_UART()}
+{\footnotesize\ttfamily void write\+\_\+\+Data\+\_\+\+UART (\begin{DoxyParamCaption}\item[{uint8\+\_\+t $\ast$}]{p\+Data\+Tx }\end{DoxyParamCaption})}
+
+
+
+Sends a string of data over the specified UART peripheral. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em Pointer} & to the data string to be sent. \\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em None.} & \\
+\hline
+\end{DoxyRetVals}
+$<$ verifies that the data pointer is valid

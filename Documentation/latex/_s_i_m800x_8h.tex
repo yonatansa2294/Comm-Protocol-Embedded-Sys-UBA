@@ -1,0 +1,1081 @@
+\doxysection{C\+:/\+Users/\+Jonatan/\+One\+Drive/\+Escritorio/\+PCSE/\+Driver\+\_\+\+SIM800x/\+Inc/\+SIM800x.h File Reference}
+\label{_s_i_m800x_8h}\index{C:/Users/Jonatan/OneDrive/Escritorio/PCSE/Driver\_SIM800x/Inc/SIM800x.h@{C:/Users/Jonatan/OneDrive/Escritorio/PCSE/Driver\_SIM800x/Inc/SIM800x.h}}
+
+
+This file uses the \doxyref{port.\+h}{p.}{port_8h} file for the SIM initialization routines and in particular, the UART handling functions for GSM/\+GPRS connectivity.  
+
+
+{\ttfamily \#include $<$stdbool.\+h$>$}\newline
+{\ttfamily \#include $<$stdio.\+h$>$}\newline
+{\ttfamily \#include $<$string.\+h$>$}\newline
+{\ttfamily \#include $<$stdint.\+h$>$}\newline
+{\ttfamily \#include \char`\"{}port.\+h\char`\"{}}\newline
+\doxysubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \textbf{ AT\+\_\+\+CHECK\+\_\+\+COMM}~\char`\"{}AT\char`\"{}
+\item 
+\#define \textbf{ AT\+\_\+\+CMD\+\_\+\+CONFIG\+\_\+\+BAUD}~\char`\"{}IPR\char`\"{}
+\item 
+\#define \textbf{ DEFAULT\+\_\+\+BAUD\+\_\+\+RATE\+\_\+\+SIM}~\char`\"{}9600\char`\"{}
+\item 
+\#define \textbf{ OK}~0
+\item 
+\#define \textbf{ ERROR}~1
+\item 
+\#define \textbf{ NO\+\_\+\+RESPONSE}~2
+\item 
+\#define \textbf{ AT\+\_\+\+CMD\+\_\+\+NETWORK\+\_\+\+REGISTER}~\char`\"{}AT+CREG?\char`\"{}
+\item 
+\#define \textbf{ NETWORK\+\_\+\+NOT\+\_\+\+REGISTERED\+\_\+\+NO\+\_\+\+SEARCHING}~\char`\"{},0\char`\"{}
+\item 
+\#define \textbf{ NETWORK\+\_\+\+REGISTERED}~\char`\"{},1\char`\"{}
+\item 
+\#define \textbf{ NETWORK\+\_\+\+NOT\+\_\+\+REGISTERED\+\_\+\+BUT\+\_\+\+SEARCHING}~\char`\"{},2\char`\"{}
+\item 
+\#define \textbf{ REGISTRATION\+\_\+\+DENIED}~\char`\"{},3\char`\"{}
+\item 
+\#define \textbf{ UNKNOWN}~\char`\"{},4\char`\"{}
+\item 
+\#define \textbf{ REGISTERED\+\_\+\+ROAMING}~\char`\"{},5\char`\"{}
+\item 
+\#define \textbf{ AT\+\_\+\+CMD\+\_\+\+CALL}~\char`\"{}ATD\char`\"{}
+\item 
+\#define \textbf{ AT\+\_\+\+CMD\+\_\+\+END\+\_\+\+CALL}~\char`\"{}ATH\char`\"{}
+\item 
+\#define \textbf{ AT\+\_\+\+CMD\+\_\+\+TEXT\+\_\+\+MODE}~\char`\"{}CMGF\char`\"{}
+\item 
+\#define \textbf{ TEXT\+\_\+\+MODE}~\char`\"{}1\char`\"{}
+\item 
+\#define \textbf{ AT\+\_\+\+CMD\+\_\+\+SEND\+\_\+\+SMS}~\char`\"{}CMGS\char`\"{}
+\item 
+\#define \textbf{ INPUT\+\_\+\+DATA}~\textquotesingle{}$>$\textquotesingle{}
+\item 
+\#define \textbf{ CTRL\+\_\+Z}~0x1A
+\begin{DoxyCompactList}\small\item\em Defines the character ASCII with which the text entry in the message is finalized and the message is sent. \end{DoxyCompactList}\item 
+\#define \textbf{ AT\+\_\+\+CMD\+\_\+\+READ\+\_\+\+SMS}~\char`\"{}CMGR\char`\"{}
+\item 
+\#define \textbf{ AT\+\_\+\+CMD\+\_\+\+LIST\+\_\+\+SMS}~\char`\"{}CMGL\char`\"{}
+\begin{DoxyCompactList}\small\item\em Defines the the parameter of command used to list received messages according to their status\+:READ,UNREAD or stored messages\+: SENT,UNSET. \end{DoxyCompactList}\item 
+\#define \textbf{ RECEIVED\+\_\+\+UNREAD}~\char`\"{}\textbackslash{}\char`\"{}REC UNREAD\textbackslash{}\char`\"{}\char`\"{}
+\item 
+\#define \textbf{ RECEIVED\+\_\+\+READ}~\char`\"{}\textbackslash{}\char`\"{}REC READ\textbackslash{}\char`\"{}\char`\"{}
+\item 
+\#define \textbf{ STORED\+\_\+\+UNSENT}~\char`\"{}\textbackslash{}\char`\"{}STO UNSENT\textbackslash{}\char`\"{}\char`\"{}
+\item 
+\#define \textbf{ STORED\+\_\+\+SENT}~\char`\"{}\textbackslash{}\char`\"{}STO SENT\textbackslash{}\char`\"{}\char`\"{}
+\item 
+\#define \textbf{ ALL}~\char`\"{}\textbackslash{}\char`\"{}ALL\textbackslash{}\char`\"{}\char`\"{}
+\item 
+\#define \textbf{ AT\+\_\+\+CMD\+\_\+\+DELETE\+\_\+\+SMS}~\char`\"{}CMGD\char`\"{}
+\begin{DoxyCompactList}\small\item\em Defines the the parameter of command used to delete received messages according to flag parameter [0-\/4] which indicates which type of message to delete. \end{DoxyCompactList}\item 
+\#define \textbf{ DELETE\+\_\+\+ALL\+\_\+\+SMS}~4
+\begin{DoxyCompactList}\small\item\em Delete all messages from preferred message storage including unread messages. \end{DoxyCompactList}\item 
+\#define \textbf{ DELETE\+\_\+\+ALL\+\_\+\+READ\+\_\+\+SENT\+\_\+\+UNSET\+\_\+\+SMS}~3
+\begin{DoxyCompactList}\small\item\em Delete all read messages from preferred message storage, sent and unsent SIM originated messages leaving unread messages untouched. \end{DoxyCompactList}\item 
+\#define \textbf{ DELETE\+\_\+\+ALL\+\_\+\+READ\+\_\+\+SENT\+\_\+\+SMS}~2
+\begin{DoxyCompactList}\small\item\em Delete all read messages from preferred message storage and sent SIM originated messages, leaving unread messages and unsent SIM originated messages untouched. \end{DoxyCompactList}\item 
+\#define \textbf{ DELETE\+\_\+\+ALL\+\_\+\+READ\+\_\+\+SMS}~1
+\begin{DoxyCompactList}\small\item\em Delete all read messages from preferred message storage, leaving unread messages and stored SIM originated messages (whether sent or not) untouched. \end{DoxyCompactList}\item 
+\#define \textbf{ DELETE\+\_\+\+SPECIFIC\+\_\+\+SMS}~0
+\begin{DoxyCompactList}\small\item\em Delete the message specified in $<$index$>$ \end{DoxyCompactList}\item 
+\#define \textbf{ OK\+\_\+\+RESPONSE}~\char`\"{}OK\char`\"{}
+\item 
+\#define \textbf{ AT\+\_\+\+CMD\+\_\+\+GPRS\+\_\+\+SERVICE}~\char`\"{}AT+CGATT?\char`\"{}
+\item 
+\#define \textbf{ AT\+\_\+\+CMD\+\_\+\+DESACT\+\_\+\+GPRS\+\_\+\+CONTEXT}~\char`\"{}AT+CIPSHUT\char`\"{}
+\item 
+\#define \textbf{ CSTT}~\char`\"{}CSTT\char`\"{}
+\begin{DoxyCompactList}\small\item\em Defines the parameter of AT command used to set APN. \end{DoxyCompactList}\item 
+\#define \textbf{ AT\+\_\+\+CMD\+\_\+\+BRING\+\_\+\+UP\+\_\+\+GPRS\+\_\+\+CONEXION}~\char`\"{}AT+CIICR\char`\"{}
+\item 
+\#define \textbf{ AT\+\_\+\+CMD\+\_\+\+GET\+\_\+\+LOCAL\+\_\+\+IP}~\char`\"{}AT+CIFSR\char`\"{}
+\item 
+\#define \textbf{ AT\+\_\+\+CMD\+\_\+\+START\+\_\+\+TCPUDP\+\_\+\+CONEXION}~\char`\"{}CIPSTART\char`\"{}
+\item 
+\#define \textbf{ AT\+\_\+\+CMD\+\_\+\+CLOSE\+\_\+\+TCPUDP\+\_\+\+CONEXION}~\char`\"{}AT+CIPCLOSE\char`\"{}
+\item 
+\#define \textbf{ AT\+\_\+\+CMD\+\_\+\+SEND\+\_\+\+DATA\+\_\+\+TCPUDP}~\char`\"{}AT+CIPSEND\char`\"{}
+\item 
+\#define \textbf{ CIPMODE}~\char`\"{}CIPMODE\char`\"{}
+\item 
+\#define \textbf{ CONNECT\+\_\+\+OK}~\char`\"{}CONNECT\char`\"{}
+\item 
+\#define \textbf{ TCP}~\char`\"{}TCP\char`\"{}
+\item 
+\#define \textbf{ UDP}~\char`\"{}UDP\char`\"{}
+\item 
+\#define \textbf{ SEND\+\_\+\+OK}~\char`\"{}SEND OK\char`\"{}
+\item 
+\#define \textbf{ CLOSE\+\_\+\+OK}~\char`\"{}CLOSE OK\char`\"{}
+\item 
+\#define \textbf{ SHUT\+\_\+\+OK}~\char`\"{}SHUT OK\char`\"{}
+\begin{DoxyCompactList}\small\item\em Defines the the response obtained by successfully disabling the GPRS PDP context. \end{DoxyCompactList}\item 
+\#define \textbf{ TRANSPARENT\+\_\+\+MODE}~1
+\item 
+\#define \textbf{ COMMAND\+\_\+\+MODE}~0
+\item 
+\#define \textbf{ GPRS\+\_\+\+DETACHED}~\char`\"{}CGATT\+: 0\char`\"{}
+\item 
+\#define \textbf{ GPRS\+\_\+\+ATTACHED}~\char`\"{}CGATT\+: 1\char`\"{}
+\item 
+\#define \textbf{ SERIAL\+\_\+\+RESPONSE\+\_\+\+BUFFER\+\_\+\+SIZE}~100
+\item 
+\#define \textbf{ LEN\+\_\+\+BUFFER\+\_\+\+AUX\+\_\+\+CALL}~18
+\begin{DoxyCompactList}\small\item\em Defines the length of the array to form the AT command for voice call. \end{DoxyCompactList}\item 
+\#define \textbf{ LEN\+\_\+\+AT\+\_\+\+CMD\+\_\+\+CONFIG}~15
+\begin{DoxyCompactList}\small\item\em Defines the length of the array that stores the AT commands for SIM configuration\+: AT+\+IPR and AT+\+CMGF. \end{DoxyCompactList}\item 
+\#define \textbf{ LEN\+\_\+\+FORMAT\+\_\+\+CELL\+\_\+\+NUMBER}~16
+\begin{DoxyCompactList}\small\item\em Defines the length of the array to store the phone number including quotes and country code. \end{DoxyCompactList}\item 
+\#define \textbf{ LEN\+\_\+\+FORMAT\+\_\+\+APN}~20
+\end{DoxyCompactItemize}
+\doxysubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef bool \textbf{ bool\+\_\+t}
+\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+uint8\+\_\+t \textbf{ SIM800\+\_\+\+Config\+HW} (UART\+\_\+\+Handle\+Type\+Def $\ast$uart\+Handler, \textbf{ Port\+\_\+t} power\+Key\+Port, uint16\+\_\+t power\+Key\+Pin, \textbf{ Port\+\_\+t} reset\+Port, uint16\+\_\+t reset\+Pin)
+\begin{DoxyCompactList}\small\item\em Configures the UART, power\+Key and reset pins all user-\/defined. \end{DoxyCompactList}\item 
+uint8\+\_\+t \textbf{ SIM800\+\_\+\+Default\+\_\+\+Config\+HW} (void)
+\begin{DoxyCompactList}\small\item\em Configures the UART and power\+Key and reset pins by default. \end{DoxyCompactList}\item 
+uint8\+\_\+t \textbf{ SIM800\+\_\+\+Init} (void)
+\begin{DoxyCompactList}\small\item\em Configure the SIM to work in text mode and with a baud rate of 9600 baud. \end{DoxyCompactList}\item 
+void \textbf{ SIM800\+\_\+\+On} (void)
+\begin{DoxyCompactList}\small\item\em Turn on SIM. \end{DoxyCompactList}\item 
+void \textbf{ SIM800\+\_\+\+Off} (void)
+\begin{DoxyCompactList}\small\item\em Turn off SIM. \end{DoxyCompactList}\item 
+void \textbf{ SIM800\+\_\+restart} (void)
+\begin{DoxyCompactList}\small\item\em Restart SIM. \end{DoxyCompactList}\item 
+uint8\+\_\+t \textbf{ check\+\_\+\+Network\+\_\+\+Registration} (void)
+\begin{DoxyCompactList}\small\item\em Check if the SIM is registered in the GSM network. \end{DoxyCompactList}\item 
+uint8\+\_\+t \textbf{ send\+\_\+\+SMS} (uint8\+\_\+t $\ast$cell\+Number, uint8\+\_\+t $\ast$message)
+\begin{DoxyCompactList}\small\item\em Sends a text message to a user-\/specified number. \end{DoxyCompactList}\item 
+uint8\+\_\+t \textbf{ list\+\_\+\+Received\+\_\+\+SMS\+\_\+} (const uint8\+\_\+t $\ast$sms\+To\+Search, const uint8\+\_\+t $\ast$status)
+\begin{DoxyCompactList}\small\item\em This function searches for the text specified in the message parameter, in the message(s) stored in the SIMCARD SMS message list using the storage filter specified by the status parameter. @detail There should only be 1 unread message when using the RECEIVED UNREAD status. AT command used\+: AT+\+CMGL @parm Pointer to buffer of type uint8\+\_\+t containing the text to be searched in the SMS message @parm Pointer to buffer of type uint8\+\_\+t containing the status parameter -\/ pag.\+109 AT Command SIM800. \end{DoxyCompactList}\item 
+uint8\+\_\+t \textbf{ delete\+\_\+\+SMS} (uint8\+\_\+t index, uint8\+\_\+t flag)
+\begin{DoxyCompactList}\small\item\em Delete SMS Message from preferred message storage. \end{DoxyCompactList}\item 
+uint8\+\_\+t \textbf{ call} (uint8\+\_\+t $\ast$cell\+Number)
+\begin{DoxyCompactList}\small\item\em Starts a voice call to the number specified by the parameter cell\+Number. \end{DoxyCompactList}\item 
+uint8\+\_\+t \textbf{ end\+Call} (void)
+\begin{DoxyCompactList}\small\item\em Ends a voice call in progress. \end{DoxyCompactList}\item 
+uint8\+\_\+t \textbf{ check\+\_\+\+GPRS\+\_\+\+Connection} (void)
+\begin{DoxyCompactList}\small\item\em Check if the SIM is connected to the GPRS service. \end{DoxyCompactList}\item 
+uint8\+\_\+t \textbf{ disable\+\_\+\+GPRS\+\_\+\+PDP\+\_\+\+Context} (void)
+\begin{DoxyCompactList}\small\item\em Deactivate GPRS PDP(\+Packet Data Protocol) context. \end{DoxyCompactList}\item 
+uint8\+\_\+t \textbf{ set\+\_\+\+Application\+\_\+\+Mode\+\_\+\+TCPUDP} (uint8\+\_\+t tcpip\+\_\+app\+Mode)
+\begin{DoxyCompactList}\small\item\em Configure the SIM in command mode or transparent mode. \end{DoxyCompactList}\item 
+uint8\+\_\+t \textbf{ set\+APN} (uint8\+\_\+t $\ast$apn)
+\begin{DoxyCompactList}\small\item\em Configure the APN (Access Point Name). \end{DoxyCompactList}\item 
+uint8\+\_\+t \textbf{ bring\+\_\+\+Up\+\_\+\+Wireless\+\_\+\+Connection} (void)
+\begin{DoxyCompactList}\small\item\em Bring up wireless connection with GPRS or CSD. \end{DoxyCompactList}\item 
+uint8\+\_\+t \textbf{ start\+\_\+\+Up\+\_\+\+TCPUDP\+\_\+\+Connection} (uint8\+\_\+t $\ast$connection, uint8\+\_\+t $\ast$ip\+\_\+address, uint8\+\_\+t $\ast$port)
+\begin{DoxyCompactList}\small\item\em Get Local IP Address and Start Up TCP/\+UDP Connection. \end{DoxyCompactList}\item 
+uint8\+\_\+t \textbf{ close\+\_\+\+TCPUDP\+\_\+\+Connection} (void)
+\begin{DoxyCompactList}\small\item\em Close TCP or UDP connection. \end{DoxyCompactList}\item 
+uint8\+\_\+t \textbf{ send\+\_\+\+Data\+\_\+\+TCPUDP} (uint8\+\_\+t $\ast$data, uint8\+\_\+t tcpip\+\_\+app\+Mode)
+\begin{DoxyCompactList}\small\item\em Send data through TCP or UDP connection to the server. \end{DoxyCompactList}\item 
+void \textbf{ enable\+\_\+\+AT\+\_\+\+CMD\+\_\+\+In\+\_\+\+Transparent\+\_\+\+Mode} (void)
+\begin{DoxyCompactList}\small\item\em Temporarily enable AT commands in transparent mode. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+This file uses the \doxyref{port.\+h}{p.}{port_8h} file for the SIM initialization routines and in particular, the UART handling functions for GSM/\+GPRS connectivity. 
+
+\begin{DoxyVersion}{Version}
+1.\+0 
+\end{DoxyVersion}
+\begin{DoxyDate}{Date}
+24/10/2022 
+\end{DoxyDate}
+\begin{DoxyAuthor}{Author}
+Yonatan Aguirre 
+\end{DoxyAuthor}
+
+
+\doxysubsection{Macro Definition Documentation}
+\mbox{\label{_s_i_m800x_8h_a1edd1ea8bddaf4d9c5eb3eae1ee1726a}} 
+\index{SIM800x.h@{SIM800x.h}!ALL@{ALL}}
+\index{ALL@{ALL}!SIM800x.h@{SIM800x.h}}
+\doxysubsubsection{ALL}
+{\footnotesize\ttfamily \#define ALL~\char`\"{}\textbackslash{}\char`\"{}ALL\textbackslash{}\char`\"{}\char`\"{}}
+
+\mbox{\label{_s_i_m800x_8h_acc557a8c177265a2229b4c8a2bdf3043}} 
+\index{SIM800x.h@{SIM800x.h}!AT\_CHECK\_COMM@{AT\_CHECK\_COMM}}
+\index{AT\_CHECK\_COMM@{AT\_CHECK\_COMM}!SIM800x.h@{SIM800x.h}}
+\doxysubsubsection{AT\_CHECK\_COMM}
+{\footnotesize\ttfamily \#define AT\+\_\+\+CHECK\+\_\+\+COMM~\char`\"{}AT\char`\"{}}
+
+\mbox{\label{_s_i_m800x_8h_a65fa545a202d576517083f94d5931848}} 
+\index{SIM800x.h@{SIM800x.h}!AT\_CMD\_BRING\_UP\_GPRS\_CONEXION@{AT\_CMD\_BRING\_UP\_GPRS\_CONEXION}}
+\index{AT\_CMD\_BRING\_UP\_GPRS\_CONEXION@{AT\_CMD\_BRING\_UP\_GPRS\_CONEXION}!SIM800x.h@{SIM800x.h}}
+\doxysubsubsection{AT\_CMD\_BRING\_UP\_GPRS\_CONEXION}
+{\footnotesize\ttfamily \#define AT\+\_\+\+CMD\+\_\+\+BRING\+\_\+\+UP\+\_\+\+GPRS\+\_\+\+CONEXION~\char`\"{}AT+CIICR\char`\"{}}
+
+\mbox{\label{_s_i_m800x_8h_abd67f9bdedeb3601ff7038bc449a3119}} 
+\index{SIM800x.h@{SIM800x.h}!AT\_CMD\_CALL@{AT\_CMD\_CALL}}
+\index{AT\_CMD\_CALL@{AT\_CMD\_CALL}!SIM800x.h@{SIM800x.h}}
+\doxysubsubsection{AT\_CMD\_CALL}
+{\footnotesize\ttfamily \#define AT\+\_\+\+CMD\+\_\+\+CALL~\char`\"{}ATD\char`\"{}}
+
+\mbox{\label{_s_i_m800x_8h_abb4daf7565c6acdc6e00b81575db55ef}} 
+\index{SIM800x.h@{SIM800x.h}!AT\_CMD\_CLOSE\_TCPUDP\_CONEXION@{AT\_CMD\_CLOSE\_TCPUDP\_CONEXION}}
+\index{AT\_CMD\_CLOSE\_TCPUDP\_CONEXION@{AT\_CMD\_CLOSE\_TCPUDP\_CONEXION}!SIM800x.h@{SIM800x.h}}
+\doxysubsubsection{AT\_CMD\_CLOSE\_TCPUDP\_CONEXION}
+{\footnotesize\ttfamily \#define AT\+\_\+\+CMD\+\_\+\+CLOSE\+\_\+\+TCPUDP\+\_\+\+CONEXION~\char`\"{}AT+CIPCLOSE\char`\"{}}
+
+\mbox{\label{_s_i_m800x_8h_a748f5af71a36373f56f990782c4caab1}} 
+\index{SIM800x.h@{SIM800x.h}!AT\_CMD\_CONFIG\_BAUD@{AT\_CMD\_CONFIG\_BAUD}}
+\index{AT\_CMD\_CONFIG\_BAUD@{AT\_CMD\_CONFIG\_BAUD}!SIM800x.h@{SIM800x.h}}
+\doxysubsubsection{AT\_CMD\_CONFIG\_BAUD}
+{\footnotesize\ttfamily \#define AT\+\_\+\+CMD\+\_\+\+CONFIG\+\_\+\+BAUD~\char`\"{}IPR\char`\"{}}
+
+\mbox{\label{_s_i_m800x_8h_a4d27c39c4d3209cc793f75002ff8a6f2}} 
+\index{SIM800x.h@{SIM800x.h}!AT\_CMD\_DELETE\_SMS@{AT\_CMD\_DELETE\_SMS}}
+\index{AT\_CMD\_DELETE\_SMS@{AT\_CMD\_DELETE\_SMS}!SIM800x.h@{SIM800x.h}}
+\doxysubsubsection{AT\_CMD\_DELETE\_SMS}
+{\footnotesize\ttfamily \#define AT\+\_\+\+CMD\+\_\+\+DELETE\+\_\+\+SMS~\char`\"{}CMGD\char`\"{}}
+
+
+
+Defines the the parameter of command used to delete received messages according to flag parameter [0-\/4] which indicates which type of message to delete. 
+
+Defines the AT command used to delete received messages according to flag parameter [0-\/4] which indicates which type of message to delete.\mbox{\label{_s_i_m800x_8h_aab7c9c558fd4975ed397e2feaf160a84}} 
+\index{SIM800x.h@{SIM800x.h}!AT\_CMD\_DESACT\_GPRS\_CONTEXT@{AT\_CMD\_DESACT\_GPRS\_CONTEXT}}
+\index{AT\_CMD\_DESACT\_GPRS\_CONTEXT@{AT\_CMD\_DESACT\_GPRS\_CONTEXT}!SIM800x.h@{SIM800x.h}}
+\doxysubsubsection{AT\_CMD\_DESACT\_GPRS\_CONTEXT}
+{\footnotesize\ttfamily \#define AT\+\_\+\+CMD\+\_\+\+DESACT\+\_\+\+GPRS\+\_\+\+CONTEXT~\char`\"{}AT+CIPSHUT\char`\"{}}
+
+\mbox{\label{_s_i_m800x_8h_a8f24d46636047e9d6fc3f7f9aca4f71b}} 
+\index{SIM800x.h@{SIM800x.h}!AT\_CMD\_END\_CALL@{AT\_CMD\_END\_CALL}}
+\index{AT\_CMD\_END\_CALL@{AT\_CMD\_END\_CALL}!SIM800x.h@{SIM800x.h}}
+\doxysubsubsection{AT\_CMD\_END\_CALL}
+{\footnotesize\ttfamily \#define AT\+\_\+\+CMD\+\_\+\+END\+\_\+\+CALL~\char`\"{}ATH\char`\"{}}
+
+\mbox{\label{_s_i_m800x_8h_a346ba980b41954bf1b13d4dfd278d164}} 
+\index{SIM800x.h@{SIM800x.h}!AT\_CMD\_GET\_LOCAL\_IP@{AT\_CMD\_GET\_LOCAL\_IP}}
+\index{AT\_CMD\_GET\_LOCAL\_IP@{AT\_CMD\_GET\_LOCAL\_IP}!SIM800x.h@{SIM800x.h}}
+\doxysubsubsection{AT\_CMD\_GET\_LOCAL\_IP}
+{\footnotesize\ttfamily \#define AT\+\_\+\+CMD\+\_\+\+GET\+\_\+\+LOCAL\+\_\+\+IP~\char`\"{}AT+CIFSR\char`\"{}}
+
+\mbox{\label{_s_i_m800x_8h_aea27bc5c971ed32791e79eaf6852fc87}} 
+\index{SIM800x.h@{SIM800x.h}!AT\_CMD\_GPRS\_SERVICE@{AT\_CMD\_GPRS\_SERVICE}}
+\index{AT\_CMD\_GPRS\_SERVICE@{AT\_CMD\_GPRS\_SERVICE}!SIM800x.h@{SIM800x.h}}
+\doxysubsubsection{AT\_CMD\_GPRS\_SERVICE}
+{\footnotesize\ttfamily \#define AT\+\_\+\+CMD\+\_\+\+GPRS\+\_\+\+SERVICE~\char`\"{}AT+CGATT?\char`\"{}}
+
+\mbox{\label{_s_i_m800x_8h_a20ed3aa9c3bdf18e6f89bfba31dd50d9}} 
+\index{SIM800x.h@{SIM800x.h}!AT\_CMD\_LIST\_SMS@{AT\_CMD\_LIST\_SMS}}
+\index{AT\_CMD\_LIST\_SMS@{AT\_CMD\_LIST\_SMS}!SIM800x.h@{SIM800x.h}}
+\doxysubsubsection{AT\_CMD\_LIST\_SMS}
+{\footnotesize\ttfamily \#define AT\+\_\+\+CMD\+\_\+\+LIST\+\_\+\+SMS~\char`\"{}CMGL\char`\"{}}
+
+
+
+Defines the the parameter of command used to list received messages according to their status\+:READ,UNREAD or stored messages\+: SENT,UNSET. 
+
+\mbox{\label{_s_i_m800x_8h_a8ecd9d895d0fe26acf8696c4260fb32e}} 
+\index{SIM800x.h@{SIM800x.h}!AT\_CMD\_NETWORK\_REGISTER@{AT\_CMD\_NETWORK\_REGISTER}}
+\index{AT\_CMD\_NETWORK\_REGISTER@{AT\_CMD\_NETWORK\_REGISTER}!SIM800x.h@{SIM800x.h}}
+\doxysubsubsection{AT\_CMD\_NETWORK\_REGISTER}
+{\footnotesize\ttfamily \#define AT\+\_\+\+CMD\+\_\+\+NETWORK\+\_\+\+REGISTER~\char`\"{}AT+CREG?\char`\"{}}
+
+\mbox{\label{_s_i_m800x_8h_a19a6d68a1e3b60563a5bb878b81d4d87}} 
+\index{SIM800x.h@{SIM800x.h}!AT\_CMD\_READ\_SMS@{AT\_CMD\_READ\_SMS}}
+\index{AT\_CMD\_READ\_SMS@{AT\_CMD\_READ\_SMS}!SIM800x.h@{SIM800x.h}}
+\doxysubsubsection{AT\_CMD\_READ\_SMS}
+{\footnotesize\ttfamily \#define AT\+\_\+\+CMD\+\_\+\+READ\+\_\+\+SMS~\char`\"{}CMGR\char`\"{}}
+
+\mbox{\label{_s_i_m800x_8h_a57f097cd345bbea0fc8a09de54b1338b}} 
+\index{SIM800x.h@{SIM800x.h}!AT\_CMD\_SEND\_DATA\_TCPUDP@{AT\_CMD\_SEND\_DATA\_TCPUDP}}
+\index{AT\_CMD\_SEND\_DATA\_TCPUDP@{AT\_CMD\_SEND\_DATA\_TCPUDP}!SIM800x.h@{SIM800x.h}}
+\doxysubsubsection{AT\_CMD\_SEND\_DATA\_TCPUDP}
+{\footnotesize\ttfamily \#define AT\+\_\+\+CMD\+\_\+\+SEND\+\_\+\+DATA\+\_\+\+TCPUDP~\char`\"{}AT+CIPSEND\char`\"{}}
+
+\mbox{\label{_s_i_m800x_8h_aca83257da26e5d870db150a9cd777a4e}} 
+\index{SIM800x.h@{SIM800x.h}!AT\_CMD\_SEND\_SMS@{AT\_CMD\_SEND\_SMS}}
+\index{AT\_CMD\_SEND\_SMS@{AT\_CMD\_SEND\_SMS}!SIM800x.h@{SIM800x.h}}
+\doxysubsubsection{AT\_CMD\_SEND\_SMS}
+{\footnotesize\ttfamily \#define AT\+\_\+\+CMD\+\_\+\+SEND\+\_\+\+SMS~\char`\"{}CMGS\char`\"{}}
+
+\mbox{\label{_s_i_m800x_8h_a96409eda4b691a543214205e7f90a3c6}} 
+\index{SIM800x.h@{SIM800x.h}!AT\_CMD\_START\_TCPUDP\_CONEXION@{AT\_CMD\_START\_TCPUDP\_CONEXION}}
+\index{AT\_CMD\_START\_TCPUDP\_CONEXION@{AT\_CMD\_START\_TCPUDP\_CONEXION}!SIM800x.h@{SIM800x.h}}
+\doxysubsubsection{AT\_CMD\_START\_TCPUDP\_CONEXION}
+{\footnotesize\ttfamily \#define AT\+\_\+\+CMD\+\_\+\+START\+\_\+\+TCPUDP\+\_\+\+CONEXION~\char`\"{}CIPSTART\char`\"{}}
+
+\mbox{\label{_s_i_m800x_8h_a2e15dc2808b9571e3e6a1554a62049bb}} 
+\index{SIM800x.h@{SIM800x.h}!AT\_CMD\_TEXT\_MODE@{AT\_CMD\_TEXT\_MODE}}
+\index{AT\_CMD\_TEXT\_MODE@{AT\_CMD\_TEXT\_MODE}!SIM800x.h@{SIM800x.h}}
+\doxysubsubsection{AT\_CMD\_TEXT\_MODE}
+{\footnotesize\ttfamily \#define AT\+\_\+\+CMD\+\_\+\+TEXT\+\_\+\+MODE~\char`\"{}CMGF\char`\"{}}
+
+\mbox{\label{_s_i_m800x_8h_a8b811b20c07e7b4ad8a95d8056e053d1}} 
+\index{SIM800x.h@{SIM800x.h}!CIPMODE@{CIPMODE}}
+\index{CIPMODE@{CIPMODE}!SIM800x.h@{SIM800x.h}}
+\doxysubsubsection{CIPMODE}
+{\footnotesize\ttfamily \#define CIPMODE~\char`\"{}CIPMODE\char`\"{}}
+
+\mbox{\label{_s_i_m800x_8h_a60f01bfb5b44943e570d90d13c568d8c}} 
+\index{SIM800x.h@{SIM800x.h}!CLOSE\_OK@{CLOSE\_OK}}
+\index{CLOSE\_OK@{CLOSE\_OK}!SIM800x.h@{SIM800x.h}}
+\doxysubsubsection{CLOSE\_OK}
+{\footnotesize\ttfamily \#define CLOSE\+\_\+\+OK~\char`\"{}CLOSE OK\char`\"{}}
+
+\mbox{\label{_s_i_m800x_8h_ad52829a17df9d2904cb8078b4cb57ab5}} 
+\index{SIM800x.h@{SIM800x.h}!COMMAND\_MODE@{COMMAND\_MODE}}
+\index{COMMAND\_MODE@{COMMAND\_MODE}!SIM800x.h@{SIM800x.h}}
+\doxysubsubsection{COMMAND\_MODE}
+{\footnotesize\ttfamily \#define COMMAND\+\_\+\+MODE~0}
+
+\mbox{\label{_s_i_m800x_8h_a0d81baf79d8cfc40965adf09773f2242}} 
+\index{SIM800x.h@{SIM800x.h}!CONNECT\_OK@{CONNECT\_OK}}
+\index{CONNECT\_OK@{CONNECT\_OK}!SIM800x.h@{SIM800x.h}}
+\doxysubsubsection{CONNECT\_OK}
+{\footnotesize\ttfamily \#define CONNECT\+\_\+\+OK~\char`\"{}CONNECT\char`\"{}}
+
+\mbox{\label{_s_i_m800x_8h_a9e2316d55ae737e7f120ab9e188793ed}} 
+\index{SIM800x.h@{SIM800x.h}!CSTT@{CSTT}}
+\index{CSTT@{CSTT}!SIM800x.h@{SIM800x.h}}
+\doxysubsubsection{CSTT}
+{\footnotesize\ttfamily \#define CSTT~\char`\"{}CSTT\char`\"{}}
+
+
+
+Defines the parameter of AT command used to set APN. 
+
+\mbox{\label{_s_i_m800x_8h_a1a43a6dea915cbe275bcc5a32622e003}} 
+\index{SIM800x.h@{SIM800x.h}!CTRL\_Z@{CTRL\_Z}}
+\index{CTRL\_Z@{CTRL\_Z}!SIM800x.h@{SIM800x.h}}
+\doxysubsubsection{CTRL\_Z}
+{\footnotesize\ttfamily \#define CTRL\+\_\+Z~0x1A}
+
+
+
+Defines the character ASCII with which the text entry in the message is finalized and the message is sent. 
+
+\mbox{\label{_s_i_m800x_8h_a08c7b90a1c6089a2a1fb51303b259809}} 
+\index{SIM800x.h@{SIM800x.h}!DEFAULT\_BAUD\_RATE\_SIM@{DEFAULT\_BAUD\_RATE\_SIM}}
+\index{DEFAULT\_BAUD\_RATE\_SIM@{DEFAULT\_BAUD\_RATE\_SIM}!SIM800x.h@{SIM800x.h}}
+\doxysubsubsection{DEFAULT\_BAUD\_RATE\_SIM}
+{\footnotesize\ttfamily \#define DEFAULT\+\_\+\+BAUD\+\_\+\+RATE\+\_\+\+SIM~\char`\"{}9600\char`\"{}}
+
+\mbox{\label{_s_i_m800x_8h_a90eb919c8e5459d2fc7ea1c410689832}} 
+\index{SIM800x.h@{SIM800x.h}!DELETE\_ALL\_READ\_SENT\_SMS@{DELETE\_ALL\_READ\_SENT\_SMS}}
+\index{DELETE\_ALL\_READ\_SENT\_SMS@{DELETE\_ALL\_READ\_SENT\_SMS}!SIM800x.h@{SIM800x.h}}
+\doxysubsubsection{DELETE\_ALL\_READ\_SENT\_SMS}
+{\footnotesize\ttfamily \#define DELETE\+\_\+\+ALL\+\_\+\+READ\+\_\+\+SENT\+\_\+\+SMS~2}
+
+
+
+Delete all read messages from preferred message storage and sent SIM originated messages, leaving unread messages and unsent SIM originated messages untouched. 
+
+\mbox{\label{_s_i_m800x_8h_ae9ee206decb58036fde56ed0a34925b4}} 
+\index{SIM800x.h@{SIM800x.h}!DELETE\_ALL\_READ\_SENT\_UNSET\_SMS@{DELETE\_ALL\_READ\_SENT\_UNSET\_SMS}}
+\index{DELETE\_ALL\_READ\_SENT\_UNSET\_SMS@{DELETE\_ALL\_READ\_SENT\_UNSET\_SMS}!SIM800x.h@{SIM800x.h}}
+\doxysubsubsection{DELETE\_ALL\_READ\_SENT\_UNSET\_SMS}
+{\footnotesize\ttfamily \#define DELETE\+\_\+\+ALL\+\_\+\+READ\+\_\+\+SENT\+\_\+\+UNSET\+\_\+\+SMS~3}
+
+
+
+Delete all read messages from preferred message storage, sent and unsent SIM originated messages leaving unread messages untouched. 
+
+\mbox{\label{_s_i_m800x_8h_a7895d497af512a5d49ed1295f581bbde}} 
+\index{SIM800x.h@{SIM800x.h}!DELETE\_ALL\_READ\_SMS@{DELETE\_ALL\_READ\_SMS}}
+\index{DELETE\_ALL\_READ\_SMS@{DELETE\_ALL\_READ\_SMS}!SIM800x.h@{SIM800x.h}}
+\doxysubsubsection{DELETE\_ALL\_READ\_SMS}
+{\footnotesize\ttfamily \#define DELETE\+\_\+\+ALL\+\_\+\+READ\+\_\+\+SMS~1}
+
+
+
+Delete all read messages from preferred message storage, leaving unread messages and stored SIM originated messages (whether sent or not) untouched. 
+
+\mbox{\label{_s_i_m800x_8h_a3d02dddebbef37dddd7976beb9577293}} 
+\index{SIM800x.h@{SIM800x.h}!DELETE\_ALL\_SMS@{DELETE\_ALL\_SMS}}
+\index{DELETE\_ALL\_SMS@{DELETE\_ALL\_SMS}!SIM800x.h@{SIM800x.h}}
+\doxysubsubsection{DELETE\_ALL\_SMS}
+{\footnotesize\ttfamily \#define DELETE\+\_\+\+ALL\+\_\+\+SMS~4}
+
+
+
+Delete all messages from preferred message storage including unread messages. 
+
+\mbox{\label{_s_i_m800x_8h_aebed99559a3ec0345a29abdcf552cb4f}} 
+\index{SIM800x.h@{SIM800x.h}!DELETE\_SPECIFIC\_SMS@{DELETE\_SPECIFIC\_SMS}}
+\index{DELETE\_SPECIFIC\_SMS@{DELETE\_SPECIFIC\_SMS}!SIM800x.h@{SIM800x.h}}
+\doxysubsubsection{DELETE\_SPECIFIC\_SMS}
+{\footnotesize\ttfamily \#define DELETE\+\_\+\+SPECIFIC\+\_\+\+SMS~0}
+
+
+
+Delete the message specified in $<$index$>$ 
+
+\mbox{\label{_s_i_m800x_8h_a8fe83ac76edc595f6b98cd4a4127aed5}} 
+\index{SIM800x.h@{SIM800x.h}!ERROR@{ERROR}}
+\index{ERROR@{ERROR}!SIM800x.h@{SIM800x.h}}
+\doxysubsubsection{ERROR}
+{\footnotesize\ttfamily \#define ERROR~1}
+
+\mbox{\label{_s_i_m800x_8h_a7610079c1e3d210afe5c6be99f2e0635}} 
+\index{SIM800x.h@{SIM800x.h}!GPRS\_ATTACHED@{GPRS\_ATTACHED}}
+\index{GPRS\_ATTACHED@{GPRS\_ATTACHED}!SIM800x.h@{SIM800x.h}}
+\doxysubsubsection{GPRS\_ATTACHED}
+{\footnotesize\ttfamily \#define GPRS\+\_\+\+ATTACHED~\char`\"{}CGATT\+: 1\char`\"{}}
+
+\mbox{\label{_s_i_m800x_8h_a893c41beae00de2cdf66d2fd6bb37c19}} 
+\index{SIM800x.h@{SIM800x.h}!GPRS\_DETACHED@{GPRS\_DETACHED}}
+\index{GPRS\_DETACHED@{GPRS\_DETACHED}!SIM800x.h@{SIM800x.h}}
+\doxysubsubsection{GPRS\_DETACHED}
+{\footnotesize\ttfamily \#define GPRS\+\_\+\+DETACHED~\char`\"{}CGATT\+: 0\char`\"{}}
+
+\mbox{\label{_s_i_m800x_8h_ac5e7493c6b0f7f6cae012a56c0620986}} 
+\index{SIM800x.h@{SIM800x.h}!INPUT\_DATA@{INPUT\_DATA}}
+\index{INPUT\_DATA@{INPUT\_DATA}!SIM800x.h@{SIM800x.h}}
+\doxysubsubsection{INPUT\_DATA}
+{\footnotesize\ttfamily \#define INPUT\+\_\+\+DATA~\textquotesingle{}$>$\textquotesingle{}}
+
+\mbox{\label{_s_i_m800x_8h_acbf4ad1ff4b03cd2aa297ed337d50c3d}} 
+\index{SIM800x.h@{SIM800x.h}!LEN\_AT\_CMD\_CONFIG@{LEN\_AT\_CMD\_CONFIG}}
+\index{LEN\_AT\_CMD\_CONFIG@{LEN\_AT\_CMD\_CONFIG}!SIM800x.h@{SIM800x.h}}
+\doxysubsubsection{LEN\_AT\_CMD\_CONFIG}
+{\footnotesize\ttfamily \#define LEN\+\_\+\+AT\+\_\+\+CMD\+\_\+\+CONFIG~15}
+
+
+
+Defines the length of the array that stores the AT commands for SIM configuration\+: AT+\+IPR and AT+\+CMGF. 
+
+\mbox{\label{_s_i_m800x_8h_ad182b12358e778dd09f395b127ab0de9}} 
+\index{SIM800x.h@{SIM800x.h}!LEN\_BUFFER\_AUX\_CALL@{LEN\_BUFFER\_AUX\_CALL}}
+\index{LEN\_BUFFER\_AUX\_CALL@{LEN\_BUFFER\_AUX\_CALL}!SIM800x.h@{SIM800x.h}}
+\doxysubsubsection{LEN\_BUFFER\_AUX\_CALL}
+{\footnotesize\ttfamily \#define LEN\+\_\+\+BUFFER\+\_\+\+AUX\+\_\+\+CALL~18}
+
+
+
+Defines the length of the array to form the AT command for voice call. 
+
+\mbox{\label{_s_i_m800x_8h_a4ef82310fdb7f9163a35d86381562aca}} 
+\index{SIM800x.h@{SIM800x.h}!LEN\_FORMAT\_APN@{LEN\_FORMAT\_APN}}
+\index{LEN\_FORMAT\_APN@{LEN\_FORMAT\_APN}!SIM800x.h@{SIM800x.h}}
+\doxysubsubsection{LEN\_FORMAT\_APN}
+{\footnotesize\ttfamily \#define LEN\+\_\+\+FORMAT\+\_\+\+APN~20}
+
+\mbox{\label{_s_i_m800x_8h_ac97c7fe112128048a910094f16051876}} 
+\index{SIM800x.h@{SIM800x.h}!LEN\_FORMAT\_CELL\_NUMBER@{LEN\_FORMAT\_CELL\_NUMBER}}
+\index{LEN\_FORMAT\_CELL\_NUMBER@{LEN\_FORMAT\_CELL\_NUMBER}!SIM800x.h@{SIM800x.h}}
+\doxysubsubsection{LEN\_FORMAT\_CELL\_NUMBER}
+{\footnotesize\ttfamily \#define LEN\+\_\+\+FORMAT\+\_\+\+CELL\+\_\+\+NUMBER~16}
+
+
+
+Defines the length of the array to store the phone number including quotes and country code. 
+
+\mbox{\label{_s_i_m800x_8h_a39e540ed82f2d5899230007b35ff39b4}} 
+\index{SIM800x.h@{SIM800x.h}!NETWORK\_NOT\_REGISTERED\_BUT\_SEARCHING@{NETWORK\_NOT\_REGISTERED\_BUT\_SEARCHING}}
+\index{NETWORK\_NOT\_REGISTERED\_BUT\_SEARCHING@{NETWORK\_NOT\_REGISTERED\_BUT\_SEARCHING}!SIM800x.h@{SIM800x.h}}
+\doxysubsubsection{NETWORK\_NOT\_REGISTERED\_BUT\_SEARCHING}
+{\footnotesize\ttfamily \#define NETWORK\+\_\+\+NOT\+\_\+\+REGISTERED\+\_\+\+BUT\+\_\+\+SEARCHING~\char`\"{},2\char`\"{}}
+
+\mbox{\label{_s_i_m800x_8h_a654635d066dfc18ef2499f4bf87e6ab7}} 
+\index{SIM800x.h@{SIM800x.h}!NETWORK\_NOT\_REGISTERED\_NO\_SEARCHING@{NETWORK\_NOT\_REGISTERED\_NO\_SEARCHING}}
+\index{NETWORK\_NOT\_REGISTERED\_NO\_SEARCHING@{NETWORK\_NOT\_REGISTERED\_NO\_SEARCHING}!SIM800x.h@{SIM800x.h}}
+\doxysubsubsection{NETWORK\_NOT\_REGISTERED\_NO\_SEARCHING}
+{\footnotesize\ttfamily \#define NETWORK\+\_\+\+NOT\+\_\+\+REGISTERED\+\_\+\+NO\+\_\+\+SEARCHING~\char`\"{},0\char`\"{}}
+
+\mbox{\label{_s_i_m800x_8h_aab1689c0e320bb26e20292b50e8b31c5}} 
+\index{SIM800x.h@{SIM800x.h}!NETWORK\_REGISTERED@{NETWORK\_REGISTERED}}
+\index{NETWORK\_REGISTERED@{NETWORK\_REGISTERED}!SIM800x.h@{SIM800x.h}}
+\doxysubsubsection{NETWORK\_REGISTERED}
+{\footnotesize\ttfamily \#define NETWORK\+\_\+\+REGISTERED~\char`\"{},1\char`\"{}}
+
+\mbox{\label{_s_i_m800x_8h_a5f137187c6a892935c5acd036f609b22}} 
+\index{SIM800x.h@{SIM800x.h}!NO\_RESPONSE@{NO\_RESPONSE}}
+\index{NO\_RESPONSE@{NO\_RESPONSE}!SIM800x.h@{SIM800x.h}}
+\doxysubsubsection{NO\_RESPONSE}
+{\footnotesize\ttfamily \#define NO\+\_\+\+RESPONSE~2}
+
+\mbox{\label{_s_i_m800x_8h_aba51915c87d64af47fb1cc59348961c9}} 
+\index{SIM800x.h@{SIM800x.h}!OK@{OK}}
+\index{OK@{OK}!SIM800x.h@{SIM800x.h}}
+\doxysubsubsection{OK}
+{\footnotesize\ttfamily \#define OK~0}
+
+\mbox{\label{_s_i_m800x_8h_acc64899f20272bb50258de4d9a428df5}} 
+\index{SIM800x.h@{SIM800x.h}!OK\_RESPONSE@{OK\_RESPONSE}}
+\index{OK\_RESPONSE@{OK\_RESPONSE}!SIM800x.h@{SIM800x.h}}
+\doxysubsubsection{OK\_RESPONSE}
+{\footnotesize\ttfamily \#define OK\+\_\+\+RESPONSE~\char`\"{}OK\char`\"{}}
+
+\mbox{\label{_s_i_m800x_8h_adfc30e60251d4fb4ba8ec53830100250}} 
+\index{SIM800x.h@{SIM800x.h}!RECEIVED\_READ@{RECEIVED\_READ}}
+\index{RECEIVED\_READ@{RECEIVED\_READ}!SIM800x.h@{SIM800x.h}}
+\doxysubsubsection{RECEIVED\_READ}
+{\footnotesize\ttfamily \#define RECEIVED\+\_\+\+READ~\char`\"{}\textbackslash{}\char`\"{}REC READ\textbackslash{}\char`\"{}\char`\"{}}
+
+\mbox{\label{_s_i_m800x_8h_aaa2d2a41eb59c1e431453cc12ee5203b}} 
+\index{SIM800x.h@{SIM800x.h}!RECEIVED\_UNREAD@{RECEIVED\_UNREAD}}
+\index{RECEIVED\_UNREAD@{RECEIVED\_UNREAD}!SIM800x.h@{SIM800x.h}}
+\doxysubsubsection{RECEIVED\_UNREAD}
+{\footnotesize\ttfamily \#define RECEIVED\+\_\+\+UNREAD~\char`\"{}\textbackslash{}\char`\"{}REC UNREAD\textbackslash{}\char`\"{}\char`\"{}}
+
+\mbox{\label{_s_i_m800x_8h_aa39379b8a6f5f64fcbe302f08af24c88}} 
+\index{SIM800x.h@{SIM800x.h}!REGISTERED\_ROAMING@{REGISTERED\_ROAMING}}
+\index{REGISTERED\_ROAMING@{REGISTERED\_ROAMING}!SIM800x.h@{SIM800x.h}}
+\doxysubsubsection{REGISTERED\_ROAMING}
+{\footnotesize\ttfamily \#define REGISTERED\+\_\+\+ROAMING~\char`\"{},5\char`\"{}}
+
+\mbox{\label{_s_i_m800x_8h_a83dcf522880a8502678c68533abc4c1c}} 
+\index{SIM800x.h@{SIM800x.h}!REGISTRATION\_DENIED@{REGISTRATION\_DENIED}}
+\index{REGISTRATION\_DENIED@{REGISTRATION\_DENIED}!SIM800x.h@{SIM800x.h}}
+\doxysubsubsection{REGISTRATION\_DENIED}
+{\footnotesize\ttfamily \#define REGISTRATION\+\_\+\+DENIED~\char`\"{},3\char`\"{}}
+
+\mbox{\label{_s_i_m800x_8h_a747849a75a234ce00a895ff97725df40}} 
+\index{SIM800x.h@{SIM800x.h}!SEND\_OK@{SEND\_OK}}
+\index{SEND\_OK@{SEND\_OK}!SIM800x.h@{SIM800x.h}}
+\doxysubsubsection{SEND\_OK}
+{\footnotesize\ttfamily \#define SEND\+\_\+\+OK~\char`\"{}SEND OK\char`\"{}}
+
+\mbox{\label{_s_i_m800x_8h_a2995f1c58b80e18d8588bc706c57ebd8}} 
+\index{SIM800x.h@{SIM800x.h}!SERIAL\_RESPONSE\_BUFFER\_SIZE@{SERIAL\_RESPONSE\_BUFFER\_SIZE}}
+\index{SERIAL\_RESPONSE\_BUFFER\_SIZE@{SERIAL\_RESPONSE\_BUFFER\_SIZE}!SIM800x.h@{SIM800x.h}}
+\doxysubsubsection{SERIAL\_RESPONSE\_BUFFER\_SIZE}
+{\footnotesize\ttfamily \#define SERIAL\+\_\+\+RESPONSE\+\_\+\+BUFFER\+\_\+\+SIZE~100}
+
+\mbox{\label{_s_i_m800x_8h_af4eb2ea13eab75a5c44596ca01670e17}} 
+\index{SIM800x.h@{SIM800x.h}!SHUT\_OK@{SHUT\_OK}}
+\index{SHUT\_OK@{SHUT\_OK}!SIM800x.h@{SIM800x.h}}
+\doxysubsubsection{SHUT\_OK}
+{\footnotesize\ttfamily \#define SHUT\+\_\+\+OK~\char`\"{}SHUT OK\char`\"{}}
+
+
+
+Defines the the response obtained by successfully disabling the GPRS PDP context. 
+
+\mbox{\label{_s_i_m800x_8h_ac9a0a793fc63ba49c69136e222709833}} 
+\index{SIM800x.h@{SIM800x.h}!STORED\_SENT@{STORED\_SENT}}
+\index{STORED\_SENT@{STORED\_SENT}!SIM800x.h@{SIM800x.h}}
+\doxysubsubsection{STORED\_SENT}
+{\footnotesize\ttfamily \#define STORED\+\_\+\+SENT~\char`\"{}\textbackslash{}\char`\"{}STO SENT\textbackslash{}\char`\"{}\char`\"{}}
+
+\mbox{\label{_s_i_m800x_8h_a93ca61a9905a54c06b2b013f7106125d}} 
+\index{SIM800x.h@{SIM800x.h}!STORED\_UNSENT@{STORED\_UNSENT}}
+\index{STORED\_UNSENT@{STORED\_UNSENT}!SIM800x.h@{SIM800x.h}}
+\doxysubsubsection{STORED\_UNSENT}
+{\footnotesize\ttfamily \#define STORED\+\_\+\+UNSENT~\char`\"{}\textbackslash{}\char`\"{}STO UNSENT\textbackslash{}\char`\"{}\char`\"{}}
+
+\mbox{\label{_s_i_m800x_8h_a383cc726612c3f31cc235472be55516b}} 
+\index{SIM800x.h@{SIM800x.h}!TCP@{TCP}}
+\index{TCP@{TCP}!SIM800x.h@{SIM800x.h}}
+\doxysubsubsection{TCP}
+{\footnotesize\ttfamily \#define TCP~\char`\"{}TCP\char`\"{}}
+
+\mbox{\label{_s_i_m800x_8h_a9a7cf845aad09d4e1b042b356a2ebb4e}} 
+\index{SIM800x.h@{SIM800x.h}!TEXT\_MODE@{TEXT\_MODE}}
+\index{TEXT\_MODE@{TEXT\_MODE}!SIM800x.h@{SIM800x.h}}
+\doxysubsubsection{TEXT\_MODE}
+{\footnotesize\ttfamily \#define TEXT\+\_\+\+MODE~\char`\"{}1\char`\"{}}
+
+\mbox{\label{_s_i_m800x_8h_adffd6846d5aedc736b83499097d42070}} 
+\index{SIM800x.h@{SIM800x.h}!TRANSPARENT\_MODE@{TRANSPARENT\_MODE}}
+\index{TRANSPARENT\_MODE@{TRANSPARENT\_MODE}!SIM800x.h@{SIM800x.h}}
+\doxysubsubsection{TRANSPARENT\_MODE}
+{\footnotesize\ttfamily \#define TRANSPARENT\+\_\+\+MODE~1}
+
+\mbox{\label{_s_i_m800x_8h_a1db55153877cfdc729091d3aecdb3bd2}} 
+\index{SIM800x.h@{SIM800x.h}!UDP@{UDP}}
+\index{UDP@{UDP}!SIM800x.h@{SIM800x.h}}
+\doxysubsubsection{UDP}
+{\footnotesize\ttfamily \#define UDP~\char`\"{}UDP\char`\"{}}
+
+\mbox{\label{_s_i_m800x_8h_ac1ae4add974b9cfc6b5aaf8a578f01ab}} 
+\index{SIM800x.h@{SIM800x.h}!UNKNOWN@{UNKNOWN}}
+\index{UNKNOWN@{UNKNOWN}!SIM800x.h@{SIM800x.h}}
+\doxysubsubsection{UNKNOWN}
+{\footnotesize\ttfamily \#define UNKNOWN~\char`\"{},4\char`\"{}}
+
+
+
+\doxysubsection{Typedef Documentation}
+\mbox{\label{_s_i_m800x_8h_a2b21255bd7f7192db778983b15089208}} 
+\index{SIM800x.h@{SIM800x.h}!bool\_t@{bool\_t}}
+\index{bool\_t@{bool\_t}!SIM800x.h@{SIM800x.h}}
+\doxysubsubsection{bool\_t}
+{\footnotesize\ttfamily typedef bool \textbf{ bool\+\_\+t}}
+
+
+
+\doxysubsection{Function Documentation}
+\mbox{\label{_s_i_m800x_8h_abf2816d9a9009fd76ef89f11f2b0ddf9}} 
+\index{SIM800x.h@{SIM800x.h}!bring\_Up\_Wireless\_Connection@{bring\_Up\_Wireless\_Connection}}
+\index{bring\_Up\_Wireless\_Connection@{bring\_Up\_Wireless\_Connection}!SIM800x.h@{SIM800x.h}}
+\doxysubsubsection{bring\_Up\_Wireless\_Connection()}
+{\footnotesize\ttfamily uint8\+\_\+t bring\+\_\+\+Up\+\_\+\+Wireless\+\_\+\+Connection (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Bring up wireless connection with GPRS or CSD. 
+
+\begin{DoxyNote}{Note}
+AT command used\+: AT+\+CIICR AT+\+CIICR will change to IP CONFIG status, only if the status was previously IP START (APN configured). After module accepts the activated operation, if it is activated successfully, module state will be changed to IP GPRSACT, and it responds OK, otherwise it will respond ERROR. 
+\end{DoxyNote}
+
+\begin{DoxyParams}{Parameters}
+{\em None.} & \\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em Integer} & Value\+: \doxyref{OK(0)}{p.}{_s_i_m800x_8h_aba51915c87d64af47fb1cc59348961c9} -\/ wireless connection successful. \doxyref{ERROR(1)}{p.}{_s_i_m800x_8h_a8fe83ac76edc595f6b98cd4a4127aed5} -\/ Error connecting. \\
+\hline
+\end{DoxyRetVals}
+\mbox{\label{_s_i_m800x_8h_ab891b5e7c829e6ca2eff176a1cd52aef}} 
+\index{SIM800x.h@{SIM800x.h}!call@{call}}
+\index{call@{call}!SIM800x.h@{SIM800x.h}}
+\doxysubsubsection{call()}
+{\footnotesize\ttfamily uint8\+\_\+t call (\begin{DoxyParamCaption}\item[{uint8\+\_\+t $\ast$}]{cell\+Number }\end{DoxyParamCaption})}
+
+
+
+Starts a voice call to the number specified by the parameter cell\+Number. 
+
+\begin{DoxyNote}{Note}
+AT command used\+: ATD 
+\end{DoxyNote}
+
+\begin{DoxyParams}{Parameters}
+{\em Pointer} & to buffer of type uint8\+\_\+t containing the cell number \\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em Integer} & Value\+: \doxyref{OK(0)}{p.}{_s_i_m800x_8h_aba51915c87d64af47fb1cc59348961c9} -\/ Call started \doxyref{ERROR(1)}{p.}{_s_i_m800x_8h_a8fe83ac76edc595f6b98cd4a4127aed5} -\/ Error starting call \\
+\hline
+\end{DoxyRetVals}
+\mbox{\label{_s_i_m800x_8h_a2852a772d52eaaaf078d9cc6e32f8e30}} 
+\index{SIM800x.h@{SIM800x.h}!check\_GPRS\_Connection@{check\_GPRS\_Connection}}
+\index{check\_GPRS\_Connection@{check\_GPRS\_Connection}!SIM800x.h@{SIM800x.h}}
+\doxysubsubsection{check\_GPRS\_Connection()}
+{\footnotesize\ttfamily uint8\+\_\+t check\+\_\+\+GPRS\+\_\+\+Connection (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Check if the SIM is connected to the GPRS service. 
+
+\begin{DoxyNote}{Note}
+AT command used\+: AT+\+CGATT 
+\end{DoxyNote}
+
+\begin{DoxyParams}{Parameters}
+{\em None.} & \\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em Integer} & Value\+: \doxyref{OK(0)}{p.}{_s_i_m800x_8h_aba51915c87d64af47fb1cc59348961c9} -\/ Connected to GPRS service. \doxyref{ERROR(1)}{p.}{_s_i_m800x_8h_a8fe83ac76edc595f6b98cd4a4127aed5} -\/ Disconnected to GPRS service. \\
+\hline
+\end{DoxyRetVals}
+\mbox{\label{_s_i_m800x_8h_a574c8c2e38f5a6a84815b42dd616f39c}} 
+\index{SIM800x.h@{SIM800x.h}!check\_Network\_Registration@{check\_Network\_Registration}}
+\index{check\_Network\_Registration@{check\_Network\_Registration}!SIM800x.h@{SIM800x.h}}
+\doxysubsubsection{check\_Network\_Registration()}
+{\footnotesize\ttfamily uint8\+\_\+t check\+\_\+\+Network\+\_\+\+Registration (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Check if the SIM is registered in the GSM network. 
+
+\begin{DoxyNote}{Note}
+AT command used\+: AT+\+CREG 
+\end{DoxyNote}
+
+\begin{DoxyParams}{Parameters}
+{\em None.} & \\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em Integer} & Value\+: \doxyref{OK(0)}{p.}{_s_i_m800x_8h_aba51915c87d64af47fb1cc59348961c9} -\/ SIM is registered in the network. \doxyref{ERROR(1)}{p.}{_s_i_m800x_8h_a8fe83ac76edc595f6b98cd4a4127aed5} -\/ SIM is not registered in the network. \\
+\hline
+\end{DoxyRetVals}
+\mbox{\label{_s_i_m800x_8h_aad86c569e20f09463f593c80bde47f5d}} 
+\index{SIM800x.h@{SIM800x.h}!close\_TCPUDP\_Connection@{close\_TCPUDP\_Connection}}
+\index{close\_TCPUDP\_Connection@{close\_TCPUDP\_Connection}!SIM800x.h@{SIM800x.h}}
+\doxysubsubsection{close\_TCPUDP\_Connection()}
+{\footnotesize\ttfamily uint8\+\_\+t close\+\_\+\+TCPUDP\+\_\+\+Connection (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Close TCP or UDP connection. 
+
+\begin{DoxyNote}{Note}
+AT command used\+: AT+\+CIPCLOSE This command only closes connection at corresponding status of TCP/\+UDP stack. 
+\end{DoxyNote}
+
+\begin{DoxyParams}{Parameters}
+{\em None.} & \\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em Integer} & Value\+: \doxyref{OK(0)}{p.}{_s_i_m800x_8h_aba51915c87d64af47fb1cc59348961c9} -\/ Close successful. \doxyref{ERROR(1)}{p.}{_s_i_m800x_8h_a8fe83ac76edc595f6b98cd4a4127aed5} -\/ Close fail. \\
+\hline
+\end{DoxyRetVals}
+\mbox{\label{_s_i_m800x_8h_a71ddc3e432a8f877495d61e87040d82b}} 
+\index{SIM800x.h@{SIM800x.h}!delete\_SMS@{delete\_SMS}}
+\index{delete\_SMS@{delete\_SMS}!SIM800x.h@{SIM800x.h}}
+\doxysubsubsection{delete\_SMS()}
+{\footnotesize\ttfamily uint8\+\_\+t delete\+\_\+\+SMS (\begin{DoxyParamCaption}\item[{uint8\+\_\+t}]{index,  }\item[{uint8\+\_\+t}]{flag }\end{DoxyParamCaption})}
+
+
+
+Delete SMS Message from preferred message storage. 
+
+\begin{DoxyNote}{Note}
+AT command used\+: AT+\+CMGD @parm Integer value of type uint8\+\_\+t indicating the position of the message to be deleted. @parm Integer value of type uint8\+\_\+t indicating the indicating the criteria for deleting messages. 
+\end{DoxyNote}
+
+\begin{DoxyRetVals}{Return values}
+{\em Integer} & Value\+: \doxyref{OK(0)}{p.}{_s_i_m800x_8h_aba51915c87d64af47fb1cc59348961c9} -\/ Message deleted \doxyref{ERROR(1)}{p.}{_s_i_m800x_8h_a8fe83ac76edc595f6b98cd4a4127aed5} -\/ Error deleting message \\
+\hline
+\end{DoxyRetVals}
+\mbox{\label{_s_i_m800x_8h_a7dfb3bb346bb61d9f2d1e1d0b8c1e04d}} 
+\index{SIM800x.h@{SIM800x.h}!disable\_GPRS\_PDP\_Context@{disable\_GPRS\_PDP\_Context}}
+\index{disable\_GPRS\_PDP\_Context@{disable\_GPRS\_PDP\_Context}!SIM800x.h@{SIM800x.h}}
+\doxysubsubsection{disable\_GPRS\_PDP\_Context()}
+{\footnotesize\ttfamily uint8\+\_\+t disable\+\_\+\+GPRS\+\_\+\+PDP\+\_\+\+Context (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Deactivate GPRS PDP(\+Packet Data Protocol) context. 
+
+\begin{DoxyNote}{Note}
+After it is closed, the status is IP INITIAL AT command used\+: AT+\+CIPSHUT 
+\end{DoxyNote}
+
+\begin{DoxyParams}{Parameters}
+{\em None.} & \\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em Integer} & Value\+: \doxyref{OK(0)}{p.}{_s_i_m800x_8h_aba51915c87d64af47fb1cc59348961c9} -\/ IP logging successfully disabled. \doxyref{ERROR(1)}{p.}{_s_i_m800x_8h_a8fe83ac76edc595f6b98cd4a4127aed5} -\/ Error when trying to disable context. \\
+\hline
+\end{DoxyRetVals}
+\mbox{\label{_s_i_m800x_8h_a173298500f5e6b33cf24f2dce054f755}} 
+\index{SIM800x.h@{SIM800x.h}!enable\_AT\_CMD\_In\_Transparent\_Mode@{enable\_AT\_CMD\_In\_Transparent\_Mode}}
+\index{enable\_AT\_CMD\_In\_Transparent\_Mode@{enable\_AT\_CMD\_In\_Transparent\_Mode}!SIM800x.h@{SIM800x.h}}
+\doxysubsubsection{enable\_AT\_CMD\_In\_Transparent\_Mode()}
+{\footnotesize\ttfamily void enable\+\_\+\+AT\+\_\+\+CMD\+\_\+\+In\+\_\+\+Transparent\+\_\+\+Mode (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Temporarily enable AT commands in transparent mode. 
+
+\begin{DoxyNote}{Note}
+AT command used\+: AT+\+CIPCLOSE 
+\end{DoxyNote}
+
+\begin{DoxyParams}{Parameters}
+{\em None.} & \\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em None} & \\
+\hline
+\end{DoxyRetVals}
+\mbox{\label{_s_i_m800x_8h_ad45ecf1c352994094c04bfe53e388cf3}} 
+\index{SIM800x.h@{SIM800x.h}!endCall@{endCall}}
+\index{endCall@{endCall}!SIM800x.h@{SIM800x.h}}
+\doxysubsubsection{endCall()}
+{\footnotesize\ttfamily uint8\+\_\+t end\+Call (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Ends a voice call in progress. 
+
+\begin{DoxyNote}{Note}
+AT command used\+: ATH 
+\end{DoxyNote}
+
+\begin{DoxyParams}{Parameters}
+{\em None.} & \\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em Integer} & Value\+: \doxyref{OK(0)}{p.}{_s_i_m800x_8h_aba51915c87d64af47fb1cc59348961c9} -\/ Call ended \doxyref{ERROR(1)}{p.}{_s_i_m800x_8h_a8fe83ac76edc595f6b98cd4a4127aed5} -\/ Error ending call \\
+\hline
+\end{DoxyRetVals}
+\mbox{\label{_s_i_m800x_8h_ab435ceb5ec07c87b346dd99fe620edb6}} 
+\index{SIM800x.h@{SIM800x.h}!list\_Received\_SMS\_@{list\_Received\_SMS\_}}
+\index{list\_Received\_SMS\_@{list\_Received\_SMS\_}!SIM800x.h@{SIM800x.h}}
+\doxysubsubsection{list\_Received\_SMS\_()}
+{\footnotesize\ttfamily uint8\+\_\+t list\+\_\+\+Received\+\_\+\+SMS\+\_\+ (\begin{DoxyParamCaption}\item[{const uint8\+\_\+t $\ast$}]{sms\+To\+Search,  }\item[{const uint8\+\_\+t $\ast$}]{status }\end{DoxyParamCaption})}
+
+
+
+This function searches for the text specified in the message parameter, in the message(s) stored in the SIMCARD SMS message list using the storage filter specified by the status parameter. @detail There should only be 1 unread message when using the RECEIVED UNREAD status. AT command used\+: AT+\+CMGL @parm Pointer to buffer of type uint8\+\_\+t containing the text to be searched in the SMS message @parm Pointer to buffer of type uint8\+\_\+t containing the status parameter -\/ pag.\+109 AT Command SIM800. 
+
+
+\begin{DoxyRetVals}{Return values}
+{\em Integer} & Value\+: \doxyref{OK(0)}{p.}{_s_i_m800x_8h_aba51915c87d64af47fb1cc59348961c9} -\/ Message found \doxyref{ERROR(1)}{p.}{_s_i_m800x_8h_a8fe83ac76edc595f6b98cd4a4127aed5} -\/ Message not found \\
+\hline
+\end{DoxyRetVals}
+\mbox{\label{_s_i_m800x_8h_a222f05bb43fb88a43d5445224e22d8e1}} 
+\index{SIM800x.h@{SIM800x.h}!send\_Data\_TCPUDP@{send\_Data\_TCPUDP}}
+\index{send\_Data\_TCPUDP@{send\_Data\_TCPUDP}!SIM800x.h@{SIM800x.h}}
+\doxysubsubsection{send\_Data\_TCPUDP()}
+{\footnotesize\ttfamily uint8\+\_\+t send\+\_\+\+Data\+\_\+\+TCPUDP (\begin{DoxyParamCaption}\item[{uint8\+\_\+t $\ast$}]{data,  }\item[{uint8\+\_\+t}]{tcpip\+\_\+app\+Mode }\end{DoxyParamCaption})}
+
+
+
+Send data through TCP or UDP connection to the server. 
+
+\begin{DoxyNote}{Note}
+AT command used\+: AT+\+CIPSEND 
+\end{DoxyNote}
+
+\begin{DoxyParams}{Parameters}
+{\em Pointer} & to buffer of type uint8\+\_\+t containing the data to send \\
+\hline
+{\em Integer} & value that specifies the application mode\+: COMMAND MODE(0) or TRANSPARENT MODE(1) \\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em Integer} & Value\+: \doxyref{OK(0)}{p.}{_s_i_m800x_8h_aba51915c87d64af47fb1cc59348961c9} -\/ Data successfully sent. \doxyref{ERROR(1)}{p.}{_s_i_m800x_8h_a8fe83ac76edc595f6b98cd4a4127aed5} -\/ Error sending data. \\
+\hline
+\end{DoxyRetVals}
+\mbox{\label{_s_i_m800x_8h_acb32bfc3c0046ba8e9fb495c89643ad1}} 
+\index{SIM800x.h@{SIM800x.h}!send\_SMS@{send\_SMS}}
+\index{send\_SMS@{send\_SMS}!SIM800x.h@{SIM800x.h}}
+\doxysubsubsection{send\_SMS()}
+{\footnotesize\ttfamily uint8\+\_\+t send\+\_\+\+SMS (\begin{DoxyParamCaption}\item[{uint8\+\_\+t $\ast$}]{cell\+Number,  }\item[{uint8\+\_\+t $\ast$}]{message }\end{DoxyParamCaption})}
+
+
+
+Sends a text message to a user-\/specified number. 
+
+\begin{DoxyNote}{Note}
+AT command used\+: AT+\+CMGS @parm Pointer to buffer of type uint8\+\_\+t containing the cell number to which the message is to be sent. @parm Pointer to buffer of type uint8\+\_\+t containing the text to send 
+\end{DoxyNote}
+
+\begin{DoxyRetVals}{Return values}
+{\em Integer} & Value\+: \doxyref{OK(0)}{p.}{_s_i_m800x_8h_aba51915c87d64af47fb1cc59348961c9} -\/ Message sent \doxyref{ERROR(1)}{p.}{_s_i_m800x_8h_a8fe83ac76edc595f6b98cd4a4127aed5} -\/ Message not sent \\
+\hline
+\end{DoxyRetVals}
+\mbox{\label{_s_i_m800x_8h_ae9514a45bbbcff74fe1a19b23d25d246}} 
+\index{SIM800x.h@{SIM800x.h}!set\_Application\_Mode\_TCPUDP@{set\_Application\_Mode\_TCPUDP}}
+\index{set\_Application\_Mode\_TCPUDP@{set\_Application\_Mode\_TCPUDP}!SIM800x.h@{SIM800x.h}}
+\doxysubsubsection{set\_Application\_Mode\_TCPUDP()}
+{\footnotesize\ttfamily uint8\+\_\+t set\+\_\+\+Application\+\_\+\+Mode\+\_\+\+TCPUDP (\begin{DoxyParamCaption}\item[{uint8\+\_\+t}]{tcpip\+\_\+app\+Mode }\end{DoxyParamCaption})}
+
+
+
+Configure the SIM in command mode or transparent mode. 
+
+\begin{DoxyNote}{Note}
+When connected to a server, in \char`\"{}transparent\char`\"{} mode all data received by the UART is sent directly to the server, so the use of AT commands is not allowed. In case you want to enable AT commands use the function \doxyref{enable\+\_\+\+AT\+\_\+\+CMD\+\_\+\+In\+\_\+\+Transparent\+\_\+\+Mode()}{p.}{_s_i_m800x_8c_a173298500f5e6b33cf24f2dce054f755}. AT command used\+: AT+\+CIPMODE 
+\end{DoxyNote}
+
+\begin{DoxyParams}{Parameters}
+{\em Application} & mode\+: COMMAND or TRANSPARENT. \\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em Integer} & Value\+: \doxyref{OK(0)}{p.}{_s_i_m800x_8h_aba51915c87d64af47fb1cc59348961c9} -\/ Application mode configured correctly. \doxyref{ERROR(1)}{p.}{_s_i_m800x_8h_a8fe83ac76edc595f6b98cd4a4127aed5} -\/ Error while trying to configure the application mode. \\
+\hline
+\end{DoxyRetVals}
+\mbox{\label{_s_i_m800x_8h_aad203bca071f5975c956a7cb79683213}} 
+\index{SIM800x.h@{SIM800x.h}!setAPN@{setAPN}}
+\index{setAPN@{setAPN}!SIM800x.h@{SIM800x.h}}
+\doxysubsubsection{setAPN()}
+{\footnotesize\ttfamily uint8\+\_\+t set\+APN (\begin{DoxyParamCaption}\item[{uint8\+\_\+t $\ast$}]{apn }\end{DoxyParamCaption})}
+
+
+
+Configure the APN (Access Point Name). 
+
+\begin{DoxyNote}{Note}
+AT command used\+: AT+\+CSTT The write command and execution command of this command is valid only at the state of IP INITIAL. So it is necessary to execute the function \doxyref{disable\+\_\+\+GPRS\+\_\+\+PDP\+\_\+\+Context()}{p.}{_s_i_m800x_8c_a7dfb3bb346bb61d9f2d1e1d0b8c1e04d} before user establishes a TCP/\+UDP connection with this command when the state is not IP INITIAL or IP STATUS. After this command is executed, the state will be changed to IP START. 
+\end{DoxyNote}
+
+\begin{DoxyParams}{Parameters}
+{\em Pointer} & to buffer of type uint8\+\_\+t containing the APN of the mobile operator. The max length is 50 bytes for APN \\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em Integer} & Value\+: \doxyref{OK(0)}{p.}{_s_i_m800x_8h_aba51915c87d64af47fb1cc59348961c9} -\/ APN configured correctly. \doxyref{ERROR(1)}{p.}{_s_i_m800x_8h_a8fe83ac76edc595f6b98cd4a4127aed5} -\/ Error when configuring APN. \\
+\hline
+\end{DoxyRetVals}
+\mbox{\label{_s_i_m800x_8h_a6ab3c07bf7e579925c9cdb986e6c636b}} 
+\index{SIM800x.h@{SIM800x.h}!SIM800\_ConfigHW@{SIM800\_ConfigHW}}
+\index{SIM800\_ConfigHW@{SIM800\_ConfigHW}!SIM800x.h@{SIM800x.h}}
+\doxysubsubsection{SIM800\_ConfigHW()}
+{\footnotesize\ttfamily uint8\+\_\+t SIM800\+\_\+\+Config\+HW (\begin{DoxyParamCaption}\item[{UART\+\_\+\+Handle\+Type\+Def $\ast$}]{uart\+Handler,  }\item[{\textbf{ Port\+\_\+t}}]{power\+Key\+Port,  }\item[{uint16\+\_\+t}]{power\+Key\+Pin,  }\item[{\textbf{ Port\+\_\+t}}]{reset\+Port,  }\item[{uint16\+\_\+t}]{reset\+Pin }\end{DoxyParamCaption})}
+
+
+
+Configures the UART, power\+Key and reset pins all user-\/defined. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em Pointer} & to UART\+\_\+\+Handle\+Type\+Def UART\+\_\+\+Handle structure. \\
+\hline
+{\em GPIO} & Port for power\+Key \\
+\hline
+{\em GPIO} & Pin for power\+Key \\
+\hline
+{\em GPIO} & Port for reset \\
+\hline
+{\em GPIO} & Pin for reset \\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em Integer} & Value\+: \doxyref{OK(0)}{p.}{_s_i_m800x_8h_aba51915c87d64af47fb1cc59348961c9} -\/ \doxyref{ERROR(1)}{p.}{_s_i_m800x_8h_a8fe83ac76edc595f6b98cd4a4127aed5} \\
+\hline
+\end{DoxyRetVals}
+\mbox{\label{_s_i_m800x_8h_a21af5438fc098bafbb9828dd6953aa9a}} 
+\index{SIM800x.h@{SIM800x.h}!SIM800\_Default\_ConfigHW@{SIM800\_Default\_ConfigHW}}
+\index{SIM800\_Default\_ConfigHW@{SIM800\_Default\_ConfigHW}!SIM800x.h@{SIM800x.h}}
+\doxysubsubsection{SIM800\_Default\_ConfigHW()}
+{\footnotesize\ttfamily uint8\+\_\+t SIM800\+\_\+\+Default\+\_\+\+Config\+HW (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Configures the UART and power\+Key and reset pins by default. 
+
+\begin{DoxyNote}{Note}
+The UART1 is used by default. 
+\end{DoxyNote}
+
+\begin{DoxyParams}{Parameters}
+{\em Pointer} & to structure UART\+\_\+\+Handle\+Type\+Def \\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em Integer} & Value\+: \doxyref{OK(0)}{p.}{_s_i_m800x_8h_aba51915c87d64af47fb1cc59348961c9} -\/ \doxyref{ERROR(1)}{p.}{_s_i_m800x_8h_a8fe83ac76edc595f6b98cd4a4127aed5} \\
+\hline
+\end{DoxyRetVals}
+\mbox{\label{_s_i_m800x_8h_a22af6d373b2f2b7ae36c3d68df4e0012}} 
+\index{SIM800x.h@{SIM800x.h}!SIM800\_Init@{SIM800\_Init}}
+\index{SIM800\_Init@{SIM800\_Init}!SIM800x.h@{SIM800x.h}}
+\doxysubsubsection{SIM800\_Init()}
+{\footnotesize\ttfamily uint8\+\_\+t SIM800\+\_\+\+Init (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Configure the SIM to work in text mode and with a baud rate of 9600 baud. 
+
+\begin{DoxyNote}{Note}
+This function implements an auto-\/bauding routine as this is how the SIM is configured in the factory. The serial interface has to be operated at 8 data bits, no parity and 1 stop bit. The AT commands that are executed in this function are\+:
+\begin{DoxyEnumerate}
+\item AT+\+IPR=9600 -\/ Set baud rate to 9600
+\item AT+\+CMGF=1 -\/ Set the message system to text mode 
+\end{DoxyEnumerate}
+\end{DoxyNote}
+
+\begin{DoxyParams}{Parameters}
+{\em None} & \\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em Integer} & Value\+: \doxyref{OK(0)}{p.}{_s_i_m800x_8h_aba51915c87d64af47fb1cc59348961c9} -\/ \doxyref{ERROR(1)}{p.}{_s_i_m800x_8h_a8fe83ac76edc595f6b98cd4a4127aed5} \\
+\hline
+\end{DoxyRetVals}
+\mbox{\label{_s_i_m800x_8h_aafda24b1293bcdbd74adfcc7e3878276}} 
+\index{SIM800x.h@{SIM800x.h}!SIM800\_Off@{SIM800\_Off}}
+\index{SIM800\_Off@{SIM800\_Off}!SIM800x.h@{SIM800x.h}}
+\doxysubsubsection{SIM800\_Off()}
+{\footnotesize\ttfamily void SIM800\+\_\+\+Off (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Turn off SIM. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em None.} & \\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em None.} & \\
+\hline
+\end{DoxyRetVals}
+\mbox{\label{_s_i_m800x_8h_ad5c676bc7212ce7b30f9915105bcce54}} 
+\index{SIM800x.h@{SIM800x.h}!SIM800\_On@{SIM800\_On}}
+\index{SIM800\_On@{SIM800\_On}!SIM800x.h@{SIM800x.h}}
+\doxysubsubsection{SIM800\_On()}
+{\footnotesize\ttfamily void SIM800\+\_\+\+On (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Turn on SIM. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em None.} & \\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em None.} & \\
+\hline
+\end{DoxyRetVals}
+\mbox{\label{_s_i_m800x_8h_a5096d0e21cb6f6fdfbdec274bfc951b5}} 
+\index{SIM800x.h@{SIM800x.h}!SIM800\_restart@{SIM800\_restart}}
+\index{SIM800\_restart@{SIM800\_restart}!SIM800x.h@{SIM800x.h}}
+\doxysubsubsection{SIM800\_restart()}
+{\footnotesize\ttfamily void SIM800\+\_\+restart (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Restart SIM. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em None.} & \\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em None.} & \\
+\hline
+\end{DoxyRetVals}
+\mbox{\label{_s_i_m800x_8h_a2ad51d83a0012dfb4a14349333f74148}} 
+\index{SIM800x.h@{SIM800x.h}!start\_Up\_TCPUDP\_Connection@{start\_Up\_TCPUDP\_Connection}}
+\index{start\_Up\_TCPUDP\_Connection@{start\_Up\_TCPUDP\_Connection}!SIM800x.h@{SIM800x.h}}
+\doxysubsubsection{start\_Up\_TCPUDP\_Connection()}
+{\footnotesize\ttfamily uint8\+\_\+t start\+\_\+\+Up\+\_\+\+TCPUDP\+\_\+\+Connection (\begin{DoxyParamCaption}\item[{uint8\+\_\+t $\ast$}]{connection,  }\item[{uint8\+\_\+t $\ast$}]{ip\+\_\+address,  }\item[{uint8\+\_\+t $\ast$}]{port }\end{DoxyParamCaption})}
+
+
+
+Get Local IP Address and Start Up TCP/\+UDP Connection. 
+
+\begin{DoxyNote}{Note}
+AT command used\+: AT+\+CIFSR Only after PDP context is activated, local IP address can be obtained by this command, otherwise it will respond ERROR. AT command used\+: AT+\+CIPSTAR This command allows establishment of a TCP/\+UDP connection only when there is a local IP address. To check the status you can use the function send\+\_\+\+Test\+\_\+\+Read\+\_\+\+AT\+\_\+\+CMD and send as parameter \char`\"{}\+CIPSTATUS\char`\"{}. 
+\end{DoxyNote}
+
+\begin{DoxyParams}{Parameters}
+{\em Pointer} & of type uint8\+\_\+t containing the connection type\+: TCP or UDP. \\
+\hline
+{\em Pointer} & to buffer of type uint8\+\_\+t containing the remote server IP address \\
+\hline
+{\em Pointer} & of type uint8\+\_\+t containing the remote server port \\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em Integer} & Value\+: \doxyref{OK(0)}{p.}{_s_i_m800x_8h_aba51915c87d64af47fb1cc59348961c9} -\/ TCP/\+UDP connection successful. \doxyref{ERROR(1)}{p.}{_s_i_m800x_8h_a8fe83ac76edc595f6b98cd4a4127aed5} -\/ Error connecting. \\
+\hline
+\end{DoxyRetVals}
