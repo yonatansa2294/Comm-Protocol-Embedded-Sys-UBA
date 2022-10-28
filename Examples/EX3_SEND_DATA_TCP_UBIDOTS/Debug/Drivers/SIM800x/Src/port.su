@@ -1,0 +1,11 @@
+../Drivers/SIM800x/Src/port.c:32:8:config_UART_SIM	24	static
+../Drivers/SIM800x/Src/port.c:67:8:config_Default_SIM	40	static
+../Drivers/SIM800x/Src/port.c:128:6:initPowerKeyPin	56	static
+../Drivers/SIM800x/Src/port.c:175:6:initResetPin	56	static
+../Drivers/SIM800x/Src/port.c:225:6:power_On_SIM	8	static
+../Drivers/SIM800x/Src/port.c:245:6:power_Down_SIM	8	static
+../Drivers/SIM800x/Src/port.c:260:6:restart_SIM	8	static
+../Drivers/SIM800x/Src/port.c:274:6:keep_Reset_SIM	8	static
+../Drivers/SIM800x/Src/port.c:284:6:exit_Reset_SIM	8	static
+../Drivers/SIM800x/Src/port.c:294:6:write_Data_UART	24	static
+../Drivers/SIM800x/Src/port.c:309:9:read_Data_UART	8	static

@@ -1,0 +1,5 @@
+../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_msp.c:63:6:HAL_MspInit	16	static
+../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_msp.c:85:6:HAL_ADC_MspInit	48	static
+../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_msp.c:118:6:HAL_ADC_MspDeInit	16	static
+../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_msp.c:146:6:HAL_UART_MspInit	56	static
+../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_msp.c:206:6:HAL_UART_MspDeInit	16	static
